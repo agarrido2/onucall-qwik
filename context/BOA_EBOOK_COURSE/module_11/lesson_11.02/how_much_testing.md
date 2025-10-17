@@ -1,0 +1,18 @@
+---
+title: How much testing is enough? When do I write tests?
+description: Let's discuss together how and when testing is valuable for our business. 3X Explore/Expand/Extract can help us is this reasoning.
+---
+
+# How much testing is enough? When do I write tests?
+
+Being able to understand when and what to test is very important to optimize our efforts and maximize profits.
+The famous graph [`3X Explore/Expand/Extract` created by Kent Beck](https://medium.com/@kentbeck_7670/the-product-development-triathlon-6464e2763c46) can be used to understand in which stage our application is.
+At each stage, it is necessary to behave differently to avoid unnecessary waste.
+Let's analyze the three phases in detail:
+
+- **explore**: we are launching our idea on the market, and we don't know if it will bring benefits to our business, it makes no sense to invest in testing our features because things could change quickly. At this stage, however, it makes more sense to invest in validating the business idea and refining the UI/UX by interviewing stakeholders.
+- **expand**: we already have a user base and we need to scale to increase our business, we need to balance manual and automatic testing without losing focus on the market and develop new features to attract additional users. Often in this phase we are always looking to improve and optimize from many points of view, both at the code level, but also at the level of services and way of presenting ourselves to new customers. This type of approach is aimed at attracting as many customers as possible and trying to take away the market from competitors. Most applications are in this phase. You experiment and try to consolidate at the same time, it's a difficult balance to find, but precisely because it proceeds in waves it's nice to be able to experience.
+- **extract**: our position in the market is established and acquiring new users becomes increasingly complex because we have already reached most of them. Dedicating ourselves to automatic testing is the optimal solution because we need to consolidate our processes without creating bugs in production. Introducing new features step by step will make our users even more satisfied. So we need to think carefully about which tests to write and if and when it makes sense to test our code, but for sure the main features of our application are the ones that will be tested first. If our application is an e-commerce, it certainly makes more sense to protect against bugs in the order closing process rather than making sure that the newsletter subscription works. So, since writing and maintaining tests costs valuable time in the long run, we think carefully about what and how to test our application.
+
+There is an interesting analogy with triathlon, which lends itself well to better focusing on what has been said so far.
+A triathlon race is made up of different phases: a first swimming phase, a second cycling phase, and a third running phase. These phases have different distances, and it is important to tackle them in the right way to reach the end of a race of this difficulty. During the race, we must be very focused on the discipline we are facing because if we tackle the swimming phase with the bike, we will certainly have problems. We can apply the same thing to testing. If, during the expansion phase, we dedicate ourselves to testing instead of interviewing users and understanding what can distinguish us from other competitors, our business will never be able to emerge, and we will fail before we even realize it. The same thing can be thought of for the other phases seen previously. Therefore it is very important to stop and reflect if we have the right attitude to maximize profits.

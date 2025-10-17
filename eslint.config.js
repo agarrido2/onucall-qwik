@@ -39,7 +39,7 @@ const ignores = [
   "**/*.spec.tsx",
   "**/*.spec.ts",
   "**/.netlify",
-  "**/pnpm-lock.yaml",
+  "**/bun.lock",
   "**/package-lock.json",
   "**/yarn.lock",
   "**/server",
