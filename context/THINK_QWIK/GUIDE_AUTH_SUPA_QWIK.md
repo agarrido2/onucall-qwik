@@ -115,19 +115,19 @@ bun add @supabase/supabase-js @supabase/ssr zod
 
 ### 2. Variables de Entorno
 
-Crea `.env` en la raíz:
+Crea `.env.local` en la raíz:
 
 ```env
 # Supabase Config
-VITE_SUPABASE_URL=https://tu-proyecto.supabase.co
-VITE_SUPABASE_ANON_KEY=tu-anon-key-aqui
+PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
+PUBLIC_SUPABASE_ANON_KEY=tu-anon-key-aqui
 DATABASE_URL=postgresql://postgres:[PASSWORD]@db.[PROJECT].supabase.co:5432/postgres
 ```
 
 **⚠️ Importante:**
-- `VITE_*` = Variables públicas (accesibles en cliente)
+- `PUBLIC_*` = Variables públicas (accesibles en cliente) - Convención estándar de Qwik
 - `DATABASE_URL` = Solo servidor (migraciones, scripts)
-- Nunca commitear `.env` (usar `.env.example`)
+- Nunca commitear `.env.local` (usar `.env.example`)
 
 ### 3. Configurar Supabase Auth
 
@@ -160,17 +160,18 @@ Este proyecto implementa un **patrón híbrido** que combina:
 src/
 ├── lib/
 │   ├── auth/                       # 🔐 FACADE - Punto de entrada único
-│   │   └── index.ts                #    Re-exports: AuthProvider, useAuth, etc.
-│   ├── database/
+│   │   ├── index.ts                #    Re-exports: AuthProvider, useAuth, etc.
+│   │   ├── AuthProvider.tsx        #    Provider de contexto global
+│   │   └── route-guards.ts         #    Clasificación y protección de rutas
+│   ├── supabase/
 │   │   ├── index.ts                # Exports públicos
-│   │   └── supabase.ts             # Clientes Supabase (browser/server)
-│   └── routing/
-│       └── route-guards.ts         # Clasificación y protección de rutas
+│   │   └── client.ts               # Clientes Supabase (browser/server)
+│   └── contexts/
+│       └── auth-context.ts         # Definición de AuthContext (createContextId)
 │
 ├── features/                       # 📦 Features complejas
 │   └── auth/                       # Implementación detallada de auth
 │       ├── index.ts                # Exports del feature
-│       ├── auth-context.ts         # Context de autenticación
 │       ├── components/             # Componentes específicos de auth
 │       │   └── UserProfileDemo.tsx
 │       ├── hooks/
@@ -181,8 +182,8 @@ src/
 │           └── auth-helpers.ts     # withSupabase helper
 │
 ├── components/
-│   └── auth/
-│       └── AuthProvider.tsx        # Provider de contexto global
+│       └── services/
+│           └── auth-helpers.ts     # withSupabase helper
 │
 └── routes/
     ├── layout.tsx                  # Guard global + AuthProvider
@@ -197,7 +198,10 @@ src/
 
 ```typescript
 // ✅ CORRECTO: Importar core desde lib/auth (facade)
-import { useAuth, AuthProvider, AuthContext } from '~/lib/auth'
+import { useAuth, AuthProvider, RouteClassifier } from '~/lib/auth'
+
+// ✅ CORRECTO: Cliente Supabase desde lib/supabase
+import { createClient, createServerSupabaseClient } from '~/lib/supabase'
 
 // ✅ CORRECTO: Features específicas desde features/auth
 import { authSchemas, withSupabase } from '~/features/auth'
@@ -211,14 +215,14 @@ import { useAuthContext } from '~/features/auth/hooks/use-auth-context'
 
 ## 🔑 Componentes Clave
 
-### 1. Cliente Supabase (`lib/database/supabase.ts`)
+### 1. Cliente Supabase (`lib/supabase/client.ts`)
 
 ```typescript
 import { createBrowserClient, createServerClient } from '@supabase/ssr'
 import type { RequestEventCommon } from '@builder.io/qwik-city'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL
+const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY
 
 if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Faltan variables de entorno de Supabase')
@@ -282,7 +286,7 @@ export const createServerSupabaseClient = (requestEvent: RequestEventCommon) => 
 | `useVisibleTask$` | `createClient` | Suscripciones auth |
 | Event handlers | `createClient` | Botón de logout |
 
-### 2. Route Guards (`lib/routing/route-guards.ts`)
+### 2. Route Guards (`lib/auth/route-guards.ts`)
 
 ```typescript
 /**
@@ -359,8 +363,8 @@ import { component$, Slot } from "@builder.io/qwik"
 import { routeLoader$ } from "@builder.io/qwik-city"
 import { AuthProvider, RouteClassifier, getAuthRedirect } from "~/lib/auth"
 import { AppLayout } from "~/components/app/AppLayout"
-import { createServerSupabaseClient } from "~/lib/database"
-import { getRedirectPathname } from "~/lib/routing/route-guards"
+import { createServerSupabaseClient } from "~/lib/supabase"
+import { getRedirectPathname } from "~/lib/auth/route-guards"
 
 /**
  * Guard de autenticación GLOBAL
@@ -427,7 +431,7 @@ export default component$(() => {
 import { component$, Slot, useContextProvider, $, useSignal, useVisibleTask$ } from "@builder.io/qwik"
 import { useNavigate } from "@builder.io/qwik-city"
 import { isBrowser } from "@builder.io/qwik/build"
-import { createClient } from "~/lib/database"
+import { createClient } from "~/lib/supabase"
 import { AuthContext, type AuthContextValue } from "~/lib/auth"
 import type { User } from "@supabase/supabase-js"
 
@@ -530,7 +534,7 @@ export const useAuth = () => {
 
 ```typescript
 import type { RequestEventAction } from "@builder.io/qwik-city"
-import { createServerSupabaseClient } from "~/lib/database"
+import { createServerSupabaseClient } from "~/lib/supabase"
 
 /**
  * Tipo de respuesta estandarizada
@@ -1004,7 +1008,7 @@ src/routes/
 ### Configuración de Rutas (Route Guards)
 
 ```typescript
-// filepath: src/lib/routing/route-guards.ts
+// filepath: src/lib/auth/route-guards.ts
 
 /**
  * Configuración centralizada de rutas por tipo
@@ -1107,7 +1111,7 @@ GET /reset-password?token=abc123
 #### 1. Ruta Pública (sin autenticación)
 
 ```typescript
-// filepath: src/lib/routing/route-guards.ts
+// filepath: src/lib/auth/route-guards.ts
 
 const ROUTE_CONFIG = {
   landing: [
@@ -1138,7 +1142,7 @@ export default component$(() => {
 #### 2. Ruta de Autenticación
 
 ```typescript
-// filepath: src/lib/routing/route-guards.ts
+// filepath: src/lib/auth/route-guards.ts
 
 const ROUTE_CONFIG = {
   // ...existing code...
@@ -1194,7 +1198,7 @@ export default component$(() => {
 #### 3. Ruta Protegida (requiere autenticación)
 
 ```typescript
-// filepath: src/lib/routing/route-guards.ts
+// filepath: src/lib/auth/route-guards.ts
 
 const ROUTE_CONFIG = {
   // ...existing code...
@@ -1230,7 +1234,7 @@ export default component$(() => {
 #### 4. Ruta Protegida con Roles (Opcional)
 
 ```typescript
-// filepath: src/lib/routing/route-guards.ts
+// filepath: src/lib/auth/route-guards.ts
 
 /**
  * Configuración de rutas con roles
@@ -1258,8 +1262,8 @@ export function hasRoleAccess(
 
 import { component$, Slot } from '@builder.io/qwik';
 import { routeLoader$ } from '@builder.io/qwik-city';
-import { createServerSupabaseClient } from '~/lib/database';
-import { hasRoleAccess } from '~/lib/routing/route-guards';
+import { createServerSupabaseClient } from '~/lib/supabase';
+import { hasRoleAccess } from '~/lib/auth/route-guards';
 
 export const useAdminGuard = routeLoader$(async (requestEvent) => {
   const supabase = createServerSupabaseClient(requestEvent);
@@ -1320,7 +1324,7 @@ GET /dashboard/reports
 **Implementación:**
 
 ```typescript
-// filepath: src/lib/routing/route-guards.ts
+// filepath: src/lib/auth/route-guards.ts
 
 export function getAuthRedirect(
   pathname: string, 
@@ -1499,13 +1503,13 @@ if (result.error) {
 **Causa:** Variables de entorno incorrectas
 
 **Solución:**
-1. Verifica `.env`:
+1. Verifica `.env.local`:
    ```bash
-   echo $VITE_SUPABASE_URL
-   echo $VITE_SUPABASE_ANON_KEY
+   echo $PUBLIC_SUPABASE_URL
+   echo $PUBLIC_SUPABASE_ANON_KEY
    ```
 2. Reinicia el servidor de desarrollo
-3. Verifica que las variables empiecen con `VITE_`
+3. Verifica que las variables empiecen con `PUBLIC_` (convención Qwik)
 
 ### Error: "No se puede leer cookies"
 
@@ -1581,12 +1585,12 @@ console.log('isAuthenticated:', isAuthenticated)
 Usa este checklist al implementar auth en una nueva app:
 
 - [ ] Instalar dependencias (`@supabase/supabase-js`, `@supabase/ssr`, `zod`)
-- [ ] Configurar variables de entorno (`.env`)
-- [ ] Crear cliente Supabase (`lib/database/supabase.ts`)
-- [ ] Crear route guards (`lib/routing/route-guards.ts`)
+- [ ] Configurar variables de entorno (`.env.local`)
+- [ ] Crear cliente Supabase (`lib/supabase/client.ts`)
+- [ ] Crear route guards (`lib/auth/route-guards.ts`)
 - [ ] Implementar guard global (`routes/layout.tsx`)
 - [ ] Crear auth context (`features/auth/auth-context.ts`)
-- [ ] Crear auth provider (`components/auth/AuthProvider.tsx`)
+- [ ] Crear auth provider (`lib/auth/AuthProvider.tsx`)
 - [ ] Crear hook useAuth (`features/auth/hooks/use-auth.ts`)
 - [ ] Crear schemas de validación (`features/auth/schemas/auth-schemas.ts`)
 - [ ] Crear helper withSupabase (`features/auth/services/auth-helpers.ts`)
