@@ -3,6 +3,7 @@ import { routeAction$, Form, zod$ } from '@builder.io/qwik-city'
 import { createServerSupabaseClient } from '~/lib/supabase'
 import { getRedirectPathname } from '~/lib/auth'
 import { loginSchema } from '~/features/auth/schemas/auth-schemas'
+import { OAuthButtons } from '~/features/auth/components/OAuthButtons'
 
 /**
  * Login Action
@@ -139,6 +140,9 @@ export default component$(() => {
             </button>
           </div>
         </Form>
+
+        {/* OAuth Buttons */}
+        <OAuthButtons mode="login" />
       </div>
     </div>
   )

@@ -1,0 +1,12 @@
+# robots.txt para OnuCall
+# Permite el rastreo completo del sitio
+
+User-agent: *
+Allow: /
+
+# Bloquear carpetas administrativas (cuando existan)
+Disallow: /admin/
+Disallow: /api/auth/
+
+# Sitemap
+Sitemap: https://onucall.com/sitemap.xml

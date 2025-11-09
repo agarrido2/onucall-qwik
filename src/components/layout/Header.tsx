@@ -1,20 +1,3 @@
-/**
- * Header Component - Landing Page Navigation with Glassmorphism
- *
- * Header flotante que aparece con efecto glassmorphism al hacer scroll.
- * Estructura principal que contiene el logo y delega la navegación al
- * componente Navigation para mantener separación de responsabilidades.
- *
- * [CITE: UX_GUIDE.md] - Glassmorphism y micro-interacciones
- * [CITE: ANEXO_QWIK.md] - useOnWindow para eventos del navegador
- * [CITE: ARQUITECTUR_FOLDER.md] - Separación de componentes en section/
- *
- * Características:
- * - Glassmorphism responsive con detección de scroll
- * - Componente Navigation extraído para mejor mantenibilidad
- * - Logo y estructura base del header
- * - Código limpio y enfocado
- */
 
 import { component$, useSignal, useOnWindow, $ } from "@builder.io/qwik";
 import { Navigation } from "./section";

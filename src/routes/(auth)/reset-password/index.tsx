@@ -1,21 +1,19 @@
 import { component$, useSignal } from '@builder.io/qwik'
 import { routeAction$, Form, zod$ } from '@builder.io/qwik-city'
 import { createServerSupabaseClient } from '~/lib/supabase'
-import { registerSchema } from '~/features/auth/schemas/auth-schemas'
-import { OAuthButtons } from '~/features/auth/components/OAuthButtons'
+import { resetPasswordSchema } from '~/features/auth/schemas/auth-schemas'
 
 /**
- * Register Action
+ * Reset Password Action
  * 
  * [CITE: CAPITULO-9.md] - routeAction$ para mutaciones
  * [CITE: QUALITY_STANDARDS.md] - Seguridad: Validación server-side
  */
-export const useRegisterAction = routeAction$(
+export const useResetPasswordAction = routeAction$(
   async (values, requestEvent) => {
     const supabase = createServerSupabaseClient(requestEvent)
 
-    const { error } = await supabase.auth.signUp({
-      email: values.email,
+    const { error } = await supabase.auth.updateUser({
       password: values.password,
     })
 
@@ -26,22 +24,23 @@ export const useRegisterAction = routeAction$(
       }
     }
 
-    return {
-      success: true,
-      message: 'Cuenta creada. Revisa tu email para confirmar tu cuenta.',
-    }
+    // Redirigir a dashboard después de cambiar contraseña
+    throw requestEvent.redirect(302, '/dashboard')
   },
-  zod$(registerSchema)
+  zod$(resetPasswordSchema)
 )
 
 /**
- * Register Page
+ * Reset Password Page
  * 
- * [CITE: UX_GUIDE.md] - Estados de loading/error/success obligatorios
- * [CITE: QUALITY_STANDARDS.md] - Accesible: Labels, ARIA, contraste 4.5:1
+ * Esta página es accedida mediante el enlace del email de recuperación.
+ * Supabase maneja la sesión temporal automáticamente.
+ * 
+ * [CITE: UX_GUIDE.md] - Estados de loading/error obligatorios
+ * [CITE: QUALITY_STANDARDS.md] - Accesible: Labels, ARIA, semántica
  */
 export default component$(() => {
-  const registerAction = useRegisterAction()
+  const resetPasswordAction = useResetPasswordAction()
   const isLoading = useSignal(false)
 
   return (
@@ -50,73 +49,36 @@ export default component$(() => {
         {/* Header */}
         <div>
           <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Crear Cuenta
+            Restablecer Contraseña
           </h2>
           <p class="mt-2 text-center text-sm text-gray-600">
-            O{' '}
-            <a
-              href="/login"
-              class="font-medium text-indigo-600 hover:text-indigo-500"
-            >
-              inicia sesión con tu cuenta
-            </a>
+            Ingresa tu nueva contraseña
           </p>
         </div>
 
         {/* Form */}
-        <Form action={registerAction} class="mt-8 space-y-6">
-          {/* Success Message */}
-          {registerAction.value?.success && (
-            <div
-              class="rounded-md bg-green-50 p-4"
-              role="alert"
-              aria-live="polite"
-            >
-              <p class="text-sm text-green-800">
-                {registerAction.value.message}
-              </p>
-            </div>
-          )}
-
+        <Form action={resetPasswordAction} class="mt-8 space-y-6">
           {/* Error Message */}
-          {registerAction.value?.error && (
+          {resetPasswordAction.value?.error && (
             <div
               class="rounded-md bg-red-50 p-4"
               role="alert"
               aria-live="polite"
             >
-              <p class="text-sm text-red-800">{registerAction.value.error}</p>
+              <p class="text-sm text-red-800">
+                {resetPasswordAction.value.error}
+              </p>
             </div>
           )}
 
           <div class="space-y-4">
-            {/* Email Input */}
-            <div>
-              <label
-                for="email"
-                class="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Correo electrónico
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                class="mt-2 block w-full rounded-md border-0 px-3 py-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="tu@email.com"
-                disabled={isLoading.value}
-              />
-            </div>
-
             {/* Password Input */}
             <div>
               <label
                 for="password"
                 class="block text-sm font-medium leading-6 text-gray-900"
               >
-                Contraseña
+                Nueva Contraseña
               </label>
               <input
                 id="password"
@@ -136,7 +98,7 @@ export default component$(() => {
                 for="confirmPassword"
                 class="block text-sm font-medium leading-6 text-gray-900"
               >
-                Confirmar Contraseña
+                Confirmar Nueva Contraseña
               </label>
               <input
                 id="confirmPassword"
@@ -145,7 +107,7 @@ export default component$(() => {
                 autoComplete="new-password"
                 required
                 class="mt-2 block w-full rounded-md border-0 px-3 py-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="Confirma tu contraseña"
+                placeholder="Confirma tu nueva contraseña"
                 disabled={isLoading.value}
               />
             </div>
@@ -157,19 +119,42 @@ export default component$(() => {
               type="submit"
               disabled={isLoading.value}
               class="group relative flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
-              aria-label="Crear cuenta"
+              aria-label="Restablecer contraseña"
             >
               {isLoading.value ? (
-                <span>Creando cuenta...</span>
+                <span>Restableciendo...</span>
               ) : (
-                <span>Crear cuenta</span>
+                <span>Restablecer contraseña</span>
               )}
             </button>
           </div>
-        </Form>
 
-        {/* OAuth Buttons */}
-        <OAuthButtons mode="register" />
+          {/* Security Notice */}
+          <div class="rounded-md bg-blue-50 p-4">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <svg
+                  class="h-5 w-5 text-blue-400"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
+              <div class="ml-3 flex-1">
+                <p class="text-sm text-blue-700">
+                  Después de cambiar tu contraseña, todas tus sesiones activas
+                  se cerrarán por seguridad.
+                </p>
+              </div>
+            </div>
+          </div>
+        </Form>
       </div>
     </div>
   )

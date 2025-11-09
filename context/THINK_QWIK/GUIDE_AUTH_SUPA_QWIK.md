@@ -54,7 +54,69 @@ import { useAuthContext } from '~/features/auth/hooks/use-auth-context'
 
 ---
 
-## �🏗️ Arquitectura
+## 🗺️ Roadmap de OAuth Providers
+
+### Estado Actual de Implementación
+
+```typescript
+// Providers actualmente soportados
+type OAuthProvider = 'google' // ✅ Implementado
+
+// Roadmap futuro
+type FutureProviders = 'github' | 'microsoft' | 'apple'
+```
+
+| Provider | Prioridad | Estado | Código | Configuración | ETA |
+|----------|-----------|--------|--------|---------------|-----|
+| 🔵 Google | Alta | ✅ Implementado | ✅ Listo | ⏳ Pendiente | Configurar pronto |
+| ⚫ GitHub | Media | 📅 Planificado | ❌ Pendiente | ❌ Pendiente | Producto avanzado |
+| 🔷 Microsoft | Baja | 💭 Considerado | ❌ | ❌ | TBD |
+| 🍎 Apple | Baja | 💭 Considerado | ❌ | ❌ | TBD |
+
+> **Última actualización**: 9 de noviembre de 2025
+
+### Expandir OAuth Providers
+
+Cuando añadas un nuevo provider (ej. GitHub), sigue estos pasos:
+
+**1. Actualizar validación en** `src/routes/api/auth/oauth/index.ts`:
+```typescript
+// Cambiar de:
+if (!provider || provider !== 'google') {
+  // error
+}
+
+// A:
+if (!provider || !['google', 'github'].includes(provider)) {
+  // error
+}
+```
+
+**2. Actualizar tipos TypeScript**:
+```typescript
+// src/features/auth/components/OAuthButtons.tsx
+type OAuthProvider = 'google' | 'github'
+```
+
+**3. Añadir botón en** `src/features/auth/components/OAuthButtons.tsx`:
+```tsx
+{/* GitHub Button */}
+<button
+  onClick$={() => handleOAuth('github')}
+  aria-label={`${actionText} GitHub`}
+>
+  <GitHubIcon />
+  <span>{actionText} GitHub</span>
+</button>
+```
+
+**4. Configurar en Supabase** siguiendo la guía completa en `OAUTH_SETUP.md`
+
+**5. Actualizar roadmap** en este documento y en `OAUTH_SETUP.md`
+
+---
+
+## 🏗️ Arquitectura
 
 ### Principios de Diseño
 

@@ -1,4 +1,4 @@
-import { component$, Slot, useContextProvider, $, useSignal, useVisibleTask$ } from "@builder.io/qwik"
+import { component$, Slot, useContextProvider, $, useSignal, useVisibleTask$, useTask$ } from "@builder.io/qwik"
 import { useNavigate } from "@builder.io/qwik-city"
 import { isBrowser } from "@builder.io/qwik/build"
 import { createClient } from "~/lib/supabase"
@@ -18,12 +18,30 @@ interface AuthProviderProps {
  * - Proporciona método logout
  * 
  * [CITE: GUIDE_AUTH_SUPA_QWIK.md - Auth Provider]
+ * [CITE: CAPITULO-5.md] - useTask$ para sincronización de props
  */
 export const AuthProvider = component$<AuthProviderProps>((props) => {
   const nav = useNavigate()
   
   // Inicializar con usuario del SSR
   const currentUser = useSignal<User | null>(props.user || null)
+
+  /**
+   * 🔄 SINCRONIZACIÓN DE PROPS → STATE
+   * 
+   * useTask$ se ejecuta en SERVIDOR y CLIENTE
+   * Trackea cambios en props.user y actualiza currentUser.value
+   * 
+   * Soluciona problema de caché cuando:
+   * - Usuario A logout → Usuario B login
+   * - SSR tiene nuevo user pero signal no se actualiza
+   * 
+   * [CITE: CAPITULO-5.md] - useTask$ para efectos reactivos
+   */
+  useTask$(({ track }) => {
+    const user = track(() => props.user)
+    currentUser.value = user
+  })
 
   const logout = $(async () => {
     const supabase = createClient()

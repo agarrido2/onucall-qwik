@@ -1,18 +1,3 @@
-/**
- * Navigation Component - Sistema de Navegación del Header
- * 
- * Componente especializado que maneja toda la lógica de navegación tanto
- * para desktop como para móvil. Incluye dropdowns, menú móvil y acciones.
- * 
- * [CITE: ARQUITECTUR_FOLDER.md] - Separación de componentes en section/
- * [CITE: UX_GUIDE.md] - Micro-interacciones y navegación fluida
- * 
- * Características:
- * - Navegación desktop y móvil unificada
- * - Headless UI con @qwik-ui/headless para accesibilidad
- * - Estado compartido con Header para glassmorphism
- */
-
 import { component$, useSignal, $ } from "@builder.io/qwik";
 import { Link } from "@builder.io/qwik-city";
 import { Collapsible } from "@qwik-ui/headless";

@@ -1,5 +1,6 @@
 import { component$ } from '@builder.io/qwik'
 import { useAuth } from '~/lib/auth'
+import { useAuthGuard } from '../layout'
 
 /**
  * Dashboard Page (Protegida)
@@ -9,6 +10,10 @@ import { useAuth } from '~/lib/auth'
  */
 export default component$(() => {
   const auth = useAuth()
+  const authData = useAuthGuard()
+  
+  // Usar datos del guard si auth.user está null (durante hidratación)
+  const user = auth.user || authData.value.user
 
   return (
     <div class="min-h-screen bg-gray-50">
@@ -23,7 +28,7 @@ export default component$(() => {
             </div>
             <div class="flex items-center">
               <span class="text-sm text-gray-700 mr-4">
-                {auth.user?.email}
+                {user?.email}
               </span>
               <button
                 onClick$={auth.logout}
@@ -45,7 +50,7 @@ export default component$(() => {
               ¡Bienvenido al Dashboard!
             </h2>
             <p class="mt-2 text-sm text-gray-600">
-              Has iniciado sesión correctamente con: <strong>{auth.user?.email}</strong>
+              Has iniciado sesión correctamente con: <strong>{user?.email}</strong>
             </p>
 
             <div class="mt-6 border-t border-gray-200 pt-6">
@@ -55,12 +60,12 @@ export default component$(() => {
               <dl class="mt-4 space-y-4">
                 <div>
                   <dt class="text-sm font-medium text-gray-500">Email</dt>
-                  <dd class="mt-1 text-sm text-gray-900">{auth.user?.email}</dd>
+                  <dd class="mt-1 text-sm text-gray-900">{user?.email}</dd>
                 </div>
                 <div>
                   <dt class="text-sm font-medium text-gray-500">ID</dt>
                   <dd class="mt-1 text-sm text-gray-900 font-mono">
-                    {auth.user?.id}
+                    {user?.id}
                   </dd>
                 </div>
                 <div>
