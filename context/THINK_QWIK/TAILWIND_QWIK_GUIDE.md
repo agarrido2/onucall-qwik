@@ -1,4 +1,3 @@
-Claro, aquí tienes el contenido completo en formato Markdown para que lo puedas copiar y pegar.
 
 ````markdown
 # Guía de Tailwind CSS v4 para Qwik
@@ -166,3 +165,33 @@ export const ThemeToggle = component$(() => {
   );
 });
 ```
+
+---
+## PARTE 4: REGLAS DE INTEROPERABILIDAD (TAILWIND + MOTION)
+
+**Directiva Principal**: Tailwind y Motion One deben colaborar, no competir. Motion One gestiona animaciones complejas (basadas en JS) y Tailwind gestiona animaciones simples (basadas en CSS).
+
+### Regla 1: Transiciones de Estado (CSS/Tailwind)
+
+**Cuándo usar Tailwind (`transition-`):**
+Usa las utilidades `transition` de Tailwind **solo** para animaciones simples basadas en cambios de estado o pseudo-clases de CSS.
+
+* **Hover y Focus**: `hover:scale-105 transition-transform`
+* **Modo Oscuro**: Animar el cambio de `bg-background`.
+* **Clases Condicionales (Scroll)**: Perfecto para tu **Header con Glassmorphism**. El cambio de `isScrolled` (que añade/quita clases `bg-transparent` o `bg-gray-900/50`) debe ser animado con `transition-all duration-300` en el CSS del Header.
+
+### Regla 2: Animaciones de Entrada y Secuencias (JS/Motion)
+
+**Cuándo usar Motion One (`animate()`):**
+Usa `animate()`, `timeline()` o `scroll()` de Motion One para todas las animaciones de "entrada" (al aparecer) y para secuencias coreografiadas.
+
+* **Animaciones "On Reveal"**: *Siempre* usa `useVisibleTask$` + `animate()`.
+* **Scrollytelling**: *Siempre* usa `useVisibleTask$` + `scroll()`.
+* **Animaciones Coreografiadas**: *Siempre* usa `useVisibleTask$` + `timeline()`.
+
+**Regla de Oro**: Si un elemento va a ser controlado por `animate()` de Motion One, **NO DEBES** añadirle clases de `transition-*` de Tailwind que afecten a las mismas propiedades (como `opacity` o `transform`).
+
+### Regla 3: Sinergia de Clases
+
+* **Estado Inicial**: Usa siempre clases de Tailwind para definir el estado inicial *antes* de la animación de Motion. (Ej. `class="opacity-0 translate-y-5"`).
+* **Optimización**: Usa siempre la utilidad `will-change-*` de Tailwind en los elementos que vayas a animar con Motion One. (Ej. `class="will-change-[transform,opacity]"`).

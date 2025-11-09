@@ -1,24 +1,31 @@
-# Guía de Estilo y UX/UI para IA (Versión 2025)
+# Guía de Estilo y UX/UI para IA (Versión Definitiva 2025)
 
 **Propósito**: Este documento establece los principios y directivas para la generación de interfaces de usuario (UI) y experiencias de usuario (UX) de alta calidad. El objetivo es que la IA pueda crear diseños visualmente atractivos, intuitivos y efectivos, tanto para páginas de marketing (Landing Pages) como para aplicaciones funcionales (Web Apps), alineados con las tendencias de 2025.
 
 ---
-## PARTE 1: PRINCIPIOS FUNDAMENTALES DE DISEÑO Y UX
+## PARTE 1.0: TONO DE MARCA Y PERSONALIDAD
+
+Antes de cualquier diseño, se debe entender el tono de la marca. El tono de Onucall es **profesional, tecnológico y confiable**, pero también **accesible y humano**. El diseño debe sentirse como un producto de alta gama (similar a Apple o Stripe), evitando elementos caricaturescos. La confianza es el pilar principal.
+
+---
+## PARTE 1.1: PRINCIPIOS FUNDAMENTALES DE DISEÑO Y UX
 
 Estos son los pilares que deben sustentar CUALQUIER interfaz generada.
 
-### 1.1 Claridad y Simplicidad (Menos es Más)
+### 1.1.1 Claridad y Simplicidad (Menos es Más)
 La interfaz debe ser auto-explicativa. El usuario nunca debe tener que preguntarse qué hacer a continuación.
 * **Jerarquía Visual**: Guía el ojo del usuario. Los elementos más importantes deben ser más grandes, tener más contraste o estar ubicados en la parte superior. Usa el tamaño de la fuente, el peso y el color para crear una jerarquía clara.
 * **Espacio en Blanco (Whitespace)**: No sobrecargues la pantalla. El espacio en blanco es crucial para reducir la carga cognitiva, agrupar elementos relacionados y mejorar la legibilidad.
-* **Bento Grids para Complejidad**: Para secciones con múltiples características o beneficios, utiliza un **Bento Grid** (cuadrícula de cajas de diferentes tamaños, al estilo Apple). Es una tendencia clave para presentar información compleja de forma limpia, organizada y visualmente atractiva.
+* **Bento Grids para Complejidad**: Para secciones con múltiples características o beneficios, utiliza un **Bento Grid** (cuadrícula de cajas de diferentes tamaños). Es una tendencia clave para presentar información compleja de forma limpia, organizada y visualmente atractiva.
+* **Directiva de Espaciado**: Todas las separaciones y paddings deben seguir una **cuadrícula base de 4px o 8px**. En Tailwind, esto significa usar utilidades proporcionales (ej. `p-2`, `p-4`, `p-6`, `p-8`, `gap-4`, `gap-8`) y evitar valores arbitrarios.
 
-### 1.2 Consistencia
+### 1.1.2 Consistencia
 Los elementos que se ven iguales deben comportarse igual.
 * **Lenguaje de Diseño Unificado**: Usa los mismos estilos para botones, inputs, colores y tipografía en toda la aplicación.
 * **Patrones de Interfaz**: Sigue patrones de UI establecidos que los usuarios ya conocen (ej. un icono de engranaje para la configuración).
+* **Estrategia Visual**: Priorizar **visuales de producto limpios** (ej. capturas de pantalla del dashboard) e **iconografía SVG minimalista**. Evitar el uso de fotos de stock genéricas de personas. Para los testimonios, se usarán fotos de retrato profesionales de los clientes.
 
-### 1.3 Feedback y Dinamismo
+### 1.1.3 Feedback y Dinamismo
 La interfaz debe comunicar el resultado de las acciones y sentirse viva.
 * **Estados de los Elementos**: Los botones deben tener estados visuales claros: `default`, `hover`, `focus`, `active`, `disabled`.
 * **Micro-interacciones Significativas y Físicas**:
@@ -26,13 +33,13 @@ La interfaz debe comunicar el resultado de las acciones y sentirse viva.
     * **Efectos de física sutil**: Botones que reaccionan como si tuvieran peso, elementos que "rebotan" ligeramente al aparecer. Esto hace que la interfaz se sienta más real y satisfactoria.
 * **Carga y Errores**: Muestra siempre indicadores de carga (spinners, skeletons) para operaciones asíncronas y mensajes de error claros y constructivos.
 
-### 1.4 Accesibilidad (a11y) por Defecto
+### 1.1.4 Accesibilidad (a11y) por Defecto
 El diseño debe ser usable por el mayor número de personas posible.
 * **Contraste de Color**: Asegúrate de que el contraste entre el texto y el fondo cumpla con las directrices de la WCAG (mínimo 4.5:1 para texto normal).
 * **HTML Semántico**: Usa las etiquetas HTML correctas (`<nav>`, `<main>`, `<button>`).
 * **Navegación por Teclado**: Todos los elementos interactivos deben ser accesibles y operables con el teclado.
 
-### 1.5 Performance como Experiencia de Usuario
+### 1.1.5 Performance como Experiencia de Usuario
 La velocidad de carga no es un aspecto técnico, es un pilar de la UX.
 * **Arranque Instantáneo**: Una landing page lenta genera desconfianza y frustración. La IA debe priorizar la optimización de imágenes, la carga perezosa (`lazy loading`) y el uso de tecnologías eficientes (como Qwik) para garantizar una carga casi instantánea.
 

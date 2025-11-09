@@ -12,25 +12,27 @@ import { component$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 
 import { HeroSection } from "~/components/layout/HeroSection";
+import { PainSection } from "~/components/layout/PainSection";
 
 
 export default component$(() => {
   return (
     <>
-       {/* Main Content */}
-      <main>
+      
         {/* Hero Section */}
         <HeroSection />
 
+        {/* Pain Section - Validación de problemas del usuario */}
+        <PainSection />
+
         {/* Placeholders para futuras secciones */}
-        {/* Pain Section */}
         {/* Beneficios Section */}
         {/* Como Funciona Section */}
         {/* Metricas Section */}
         {/* Testimonios Section */}
         {/* FAQ Section */}
         {/* CTA Final Section */}
-      </main>
+ 
 
 
     </>

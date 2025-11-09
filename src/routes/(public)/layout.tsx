@@ -15,11 +15,17 @@ export default component$(() => {
 
   return (
     <>
+      {/* Header con altura responsive dinámica */}
       <Header />
+      
+      {/* Main content con espaciado responsive y variables CSS */}
       <main class="flex flex-col min-h-screen">
         <Slot />
+        
       </main>
-      <Footer />∫
+      
+      {/* Footer responsive */}
+      <Footer />
     </>
   );
 });

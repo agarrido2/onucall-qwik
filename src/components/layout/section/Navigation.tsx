@@ -9,21 +9,76 @@
  * 
  * Características:
  * - Navegación desktop y móvil unificada
- * - DropdownMenu integrado del sistema UI
+ * - Headless UI con @qwik-ui/headless para accesibilidad
  * - Estado compartido con Header para glassmorphism
- * - Acciones de usuario (login, CTA)
  */
 
 import { component$, useSignal, $ } from "@builder.io/qwik";
 import { Link } from "@builder.io/qwik-city";
+import { Collapsible } from "@qwik-ui/headless";
 import { MENU_ITEMS } from "~/lib/menu-config";
-import { Button } from "~/components/ui/button/button";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "~/components/ui/dropdown-menu/dropdown-menu";
+
+// Componente Dropdown para desktop
+const Dropdown = component$<{ item: any }>(({ item }) => {
+  const isOpen = useSignal(false);
+
+  return (
+    <div class="relative">
+      <button
+        class="text-[14px] font-bold text-gray-300 transition-colors duration-200 hover:text-white inline-flex items-center gap-1"
+        onClick$={() => {
+          isOpen.value = !isOpen.value;
+        }}
+        onMouseEnter$={() => {
+          isOpen.value = true;
+        }}
+        onMouseLeave$={() => {
+          isOpen.value = false;
+        }}
+      >
+        {item.text}
+        <svg
+          class={{
+            "w-4 h-4 transition-transform duration-200": true,
+            "rotate-180": isOpen.value,
+          }}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </button>
+      {isOpen.value && (
+        <div
+          class="absolute top-full left-0 mt-2 w-56 bg-gray-900/98 backdrop-blur-2xl border border-white/30 rounded-md shadow-xl p-2 z-50"
+          onMouseEnter$={() => {
+            isOpen.value = true;
+          }}
+          onMouseLeave$={() => {
+            isOpen.value = false;
+          }}
+        >
+          {item.items.map((subItem: any, subIndex: number) => (
+            <Link
+              key={subIndex}
+              href={subItem.href || "#"}
+              class="block px-4 py-2 text-sm text-white hover:bg-white/20 rounded-md transition-colors"
+            >
+              {subItem.text}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+});
+
 
 interface NavigationProps {
   isScrolled: boolean;
@@ -47,47 +102,21 @@ export const Navigation = component$<NavigationProps>(({ isScrolled }) => {
       <nav class="hidden md:flex">
         <div
           class={{
-            "flex items-center space-x-6 rounded-full px-6 py-2 transition-all duration-300": true,
-            "border border-white/20": !isScrolled,
-            "border border-white/30": isScrolled,
+            "flex items-center space-x-6 rounded-full px-6 py-3 transition-all duration-300": true,
+            "border-3 border-white/20": !isScrolled,
+            "border-3 border-white/30": isScrolled,
           }}
         >
           {menuItems.map((item, index) => (
             <div key={index} class="relative">
               {item.items && item.items.length > 0 ? (
-                // Dropdown para elementos con hijos (Sectores, Recursos)
-                <DropdownMenu>
-                  <DropdownMenuTrigger
-                    variant="ghost"
-                    size="sm"
-                    class="h-auto p-0 text-sm font-medium text-gray-300 transition-colors duration-200 hover:bg-transparent hover:text-white"
-                  >
-                    {item.text}
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent
-                    align="end"
-                    class="w-56 rounded-md border border-white/30 bg-gray-900/98 text-white shadow-xl backdrop-blur-2xl"
-                  >
-                    {item.items.map((subItem, subIndex) => (
-                      <DropdownMenuItem
-                        key={subIndex}
-                        class="hover:bg-white/20 hover:text-white"
-                      >
-                        <Link
-                          href={subItem.href || "#"}
-                          class="w-full text-sm"
-                        >
-                          {subItem.text}
-                        </Link>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                // Dropdown con estado controlado para desktop
+                <Dropdown item={item} />
               ) : (
                 // Enlace simple para elementos sin hijos
                 <Link
                   href={item.href || "#"}
-                  class="text-sm font-medium text-gray-300 transition-colors duration-200 hover:text-white"
+                  class="text-[14px] font-bold text-gray-300 transition-colors duration-200 hover:text-white"
                 >
                   {item.text}
                 </Link>
@@ -99,30 +128,17 @@ export const Navigation = component$<NavigationProps>(({ isScrolled }) => {
 
       {/* Derecha - Acciones Desktop */}
       <div class="hidden items-center space-x-4 md:flex">
-        <a
-          href="#login"
-          class={{
-            "rounded-full px-4 py-2 text-sm font-medium transition-all duration-200": true,
-            "border border-white/20 text-gray-300 hover:text-white": !isScrolled,
-            "border border-white/30 text-gray-300 hover:text-white": isScrolled,
-          }}
+        <Link
+          href="/#contacto"
+          class="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
-          Iniciar Sesión
-        </a>
-        <Button
-          variant="default"
-          size="sm"
-          class="transform rounded-full bg-indigo-600 px-6 py-2 text-sm font-medium text-white transition-all duration-200 hover:scale-105 hover:bg-indigo-500"
-        >
-          Prueba Onucall
-        </Button>
+          Contactar
+        </Link>
       </div>
 
       {/* Mobile Menu Button */}
-      <Button
-        variant="ghost"
-        size="icon"
-        class="p-2 text-white transition-colors duration-200 hover:bg-transparent hover:text-gray-300 md:hidden"
+      <button
+        class="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/50 md:hidden"
         onClick$={toggleMobileMenu}
       >
         <svg
@@ -140,7 +156,7 @@ export const Navigation = component$<NavigationProps>(({ isScrolled }) => {
           <line x1="3" y1="12" x2="21" y2="12"></line>
           <line x1="3" y1="18" x2="21" y2="18"></line>
         </svg>
-      </Button>
+      </button>
 
       {/* Mobile Menu */}
       {mobileMenuOpen.value && (
@@ -155,34 +171,36 @@ export const Navigation = component$<NavigationProps>(({ isScrolled }) => {
             {menuItems.map((item, index) => (
               <div key={index}>
                 {item.items && item.items.length > 0 ? (
-                  // Dropdown para móvil usando DropdownMenu
-                  <DropdownMenu>
-                    <DropdownMenuTrigger
-                      variant="ghost"
-                      size="sm"
-                      class="flex h-auto w-full items-center justify-start py-2 text-sm font-medium text-gray-300 hover:bg-transparent hover:text-white"
-                    >
+                  // Collapsible con @qwik-ui/headless para móvil
+                  <Collapsible.Root class="border-b border-white/10 pb-2">
+                    <Collapsible.Trigger class="w-full flex items-center justify-between py-2 text-sm font-medium text-gray-300 hover:text-white">
                       {item.text}
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                      align="start"
-                      class="ml-4 w-full rounded-md border border-white/30 bg-gray-900/98 text-white shadow-xl backdrop-blur-2xl"
-                    >
+                      <svg
+                        class="w-4 h-4 transition-transform duration-200"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </Collapsible.Trigger>
+                    <Collapsible.Content class="pt-2 pl-4 space-y-2">
                       {item.items.map((subItem, subIndex) => (
-                        <DropdownMenuItem
+                        <Link
                           key={subIndex}
-                          class="hover:bg-white/20 hover:text-white"
+                          href={subItem.href || "#"}
+                          class="block py-1 text-xs text-gray-300 hover:text-white transition-colors"
                         >
-                          <Link
-                            href={subItem.href || "#"}
-                            class="w-full text-xs"
-                          >
-                            {subItem.text}
-                          </Link>
-                        </DropdownMenuItem>
+                          {subItem.text}
+                        </Link>
                       ))}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                    </Collapsible.Content>
+                  </Collapsible.Root>
                 ) : (
                   // Enlace simple para móvil
                   <Link
@@ -194,20 +212,13 @@ export const Navigation = component$<NavigationProps>(({ isScrolled }) => {
                 )}
               </div>
             ))}
-            <div class="flex flex-col space-y-3 pt-4">
+            <div class="flex flex-col space-y-3 pt-4 border-t border-white/20">
               <Link
-                href="/login"
-                class="py-2 text-sm font-medium text-gray-300 transition-colors duration-200 hover:text-white"
+                href="/#contacto"
+                class="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full"
               >
-                Iniciar Sesión
+                Contactar
               </Link>
-              <Button
-                variant="default"
-                size="sm"
-                class="rounded-full bg-indigo-600 px-6 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-indigo-500"
-              >
-                Empieza Gratis
-              </Button>
             </div>
           </nav>
         </div>

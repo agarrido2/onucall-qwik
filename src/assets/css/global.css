@@ -1,243 +1,118 @@
 /**
  * Global Styles - Qwik OnuCall
- * Tailwind CSS v4 + Custom Fonts + Theme Configuration
- * CORREGIDO SEGÚN GUÍAS CANÓNICAS (TAILWIND_QWIK_GUIDE.md + UX_GUIDE.md)
+ * Tailwind CSS v4 + Variables Responsivas Personalizadas
+ * OPTIMIZADO SEGÚN GUÍAS CANÓNICAS (TAILWIND_QWIK_GUIDE.md)
  */
 
 /* 1. Importar la base y utilidades de Tailwind CSS v4 */
 @import "tailwindcss";
 
-/* 2. Importar tus fuentes personalizadas */
+
+
+
+/* 3. Importar fuentes personalizadas */
 @import "./poppins.css";
 @import "./roboto.css";
 
-/* 3. Definición de las variables de color para los temas (Capa Base) */
-/* IMPORTANTE: Los colores se definen en formato HSL separado (sin hsl()) */
-/* Esto permite que Tailwind genere variantes con opacidad (ej: bg-primary/50) */
-@layer base {
-  /* --- TEMA CLARO (POR DEFECTO) --- */
-  :root {
-    /* Colores base */
-    --background: 0 0% 100%;        /* #ffffff - Fondo blanco */
-    --foreground: 229 33% 15%;      /* #1d2033 - qwik-dirty-black */
+/* 4. Variables responsivas personalizadas */
 
-    /* Colores de marca primarios */
-    --primary: 211 100% 46%;        /* #006ce9 - qwik-dark-blue */
-    --primary-foreground: 0 0% 100%; /* #ffffff - Texto blanco sobre primary */
-    --primary-light: 196 92% 53%;   /* #18b6f6 - qwik-light-blue */
-    
-    /* Colores de marca secundarios */
-    --secondary: 261 52% 50%;       /* #713fc2 - qwik-dark-purple */
-    --secondary-foreground: 0 0% 100%; /* #ffffff - Texto blanco sobre secondary */
-    --secondary-light: 261 85% 73%; /* #ac7ff4 - qwik-light-purple */
-    
-    /* Color de acento */
-    --accent: 261 85% 73%;          /* #ac7ff4 - qwik-light-purple */
-    --accent-foreground: 229 33% 15%; /* #1d2033 - qwik-dirty-black sobre accent */
-
-    /* Estados de UI (Success, Error, Warning, Info) */
-    --success: 142 76% 36%;         /* #16a34a - Verde éxito */
-    --success-foreground: 0 0% 100%; /* #ffffff - Texto blanco sobre success */
-    --error: 0 84% 60%;             /* #ef4444 - Rojo error */
-    --error-foreground: 0 0% 100%;   /* #ffffff - Texto blanco sobre error */
-    --warning: 38 92% 50%;          /* #f59e0b - Amarillo advertencia */
-    --warning-foreground: 0 0% 100%; /* #ffffff - Texto blanco sobre warning */
-    --info: 199 89% 48%;            /* #0ea5e9 - Azul información */
-    --info-foreground: 0 0% 100%;    /* #ffffff - Texto blanco sobre info */
-
-    /* Alias para destructive */
-    --destructive: 0 84% 60%;        /* #ef4444 - Rojo error (alias) */
-    --destructive-foreground: 0 0% 100%; /* #ffffff - Texto blanco sobre destructive */
-
-    /* Colores auxiliares para bordes, fondos secundarios, etc. */
-    --muted: 210 40% 96%;           /* Gris claro para fondos */
-    --muted-foreground: 215 16% 47%; /* Gris medio para texto secundario */
-    --border: 214 32% 91%;          /* Gris para bordes */
-  }
-
-  /* --- TEMA OSCURO --- */
-  .dark {
-    /* Colores base (invertidos) */
-    --background: 0 0% 6%;          /* #101010 - Fondo oscuro */
-    --foreground: 0 0% 100%;        /* #ffffff - Texto blanco */
-    
-    /* Colores de marca primarios (versiones más brillantes para contraste) */
-    --primary: 196 92% 53%;         /* #18b6f6 - Azul claro */
-    --primary-foreground: 0 0% 6%;  /* #101010 - Texto oscuro sobre primary claro */
-    --primary-light: 211 100% 46%;  /* #006ce9 - Azul oscuro (invertido) */
-    
-    /* Colores de marca secundarios */
-    --secondary: 261 85% 73%;       /* #ac7ff4 - Púrpura claro */
-    --secondary-foreground: 0 0% 6%; /* #101010 - Texto oscuro sobre secondary claro */
-    --secondary-light: 261 52% 50%; /* #713fc2 - Púrpura oscuro (invertido) */
-    
-    /* Color de acento */
-    --accent: 196 92% 53%;          /* #18b6f6 - Azul claro como acento */
-    --accent-foreground: 0 0% 6%;   /* #101010 - Texto oscuro sobre accent claro */
-
-    /* Estados de UI (ajustados para modo oscuro) */
-    --success: 142 70% 45%;         /* Verde más brillante */
-    --success-foreground: 0 0% 6%;  /* #101010 - Texto oscuro sobre success claro */
-    --error: 0 72% 65%;             /* Rojo más brillante */
-    --error-foreground: 0 0% 6%;    /* #101010 - Texto oscuro sobre error claro */
-    --warning: 38 88% 55%;          /* Amarillo más brillante */
-    --warning-foreground: 0 0% 6%;  /* #101010 - Texto oscuro sobre warning claro */
-    --info: 199 85% 55%;            /* Azul más brillante */
-    --info-foreground: 0 0% 6%;     /* #101010 - Texto oscuro sobre info claro */
-
-    /* Alias para destructive */
-    --destructive: 0 72% 65%;       /* Rojo más brillante (alias) */
-    --destructive-foreground: 0 0% 6%; /* #101010 - Texto oscuro sobre destructive claro */
-
-    /* Colores auxiliares para modo oscuro */
-    --muted: 217 33% 17%;           /* Gris oscuro para fondos */
-    --muted-foreground: 215 20% 65%; /* Gris claro para texto secundario */
-    --border: 217 33% 17%;          /* Gris oscuro para bordes */
-  }
-
-  /* 4. Responsive Breakpoints - Puntos de Ruptura para Diseño Responsivo */
-  /* 
-   * [CITE: UX_GUIDE.md] - Diseño responsive y mobile-first approach
-   * [CITE: TAILWIND_QWIK_GUIDE.md] - Configuración de breakpoints personalizados
-   * 
-   * Sistema de breakpoints basado en dispositivos reales y mejores prácticas:
-   * - Mobile First: Diseño base para móviles, luego expandir hacia desktop
-   * - Breakpoints basados en contenido, no dispositivos específicos
-   * - Puntos de ruptura comunes para cubrir la mayoría de dispositivos
-   */
+/* Mobile (base) - Sin media query, este es el diseño por defecto */
+:root {
+  /* Espaciado responsivo base */
+  --container-padding: 1rem;       /* 16px */
+  --section-spacing: 1.5rem;       /* 24px */
+  --header-height: 3.5rem;         /* 56px */
+  --max-content-width: 100%;       /* Sin limitación en móvil */
   
-  /* Mobile (base) - Sin media query, este es el diseño por defecto */
-  /* 320px - 767px: Smartphones en orientación vertical y horizontal */
-  
-  /* Tablet Small - Tablets pequeñas y móviles grandes en landscape */
-  @media (min-width: 640px) {
-    /* sm: Tablet pequeña, móvil XL landscape */
-    :root {
-      --container-padding: 1.5rem; /* 24px */
-      --header-height: 4rem; /* 64px */
-      --section-spacing: 3rem; /* 48px */
-    }
-  }
-  
-  /* Tablet - Tablets y móviles en landscape */
-  @media (min-width: 768px) {
-    /* md: Tablet estándar, desktop pequeño */
-    :root {
-      --container-padding: 2rem; /* 32px */
-      --header-height: 4.5rem; /* 72px */
-      --section-spacing: 4rem; /* 64px */
-      --max-content-width: 768px;
-    }
-  }
-  
-  /* Desktop Small - Laptops y desktop pequeños */
-  @media (min-width: 1024px) {
-    /* lg: Desktop pequeño, laptop */
-    :root {
-      --container-padding: 2.5rem; /* 40px */
-      --header-height: 5rem; /* 80px */
-      --section-spacing: 5rem; /* 80px */
-      --max-content-width: 1024px;
-    }
-  }
-  
-  /* Desktop Medium - Desktop estándar */
-  @media (min-width: 1280px) {
-    /* xl: Desktop estándar, monitores medianos */
-    :root {
-      --container-padding: 3rem; /* 48px */
-      --header-height: 5rem; /* 80px */
-      --section-spacing: 6rem; /* 96px */
-      --max-content-width: 1280px;
-    }
-  }
-  
-  /* Desktop Large - Pantallas grandes */
-  @media (min-width: 1536px) {
-    /* 2xl: Desktop grande, monitores amplios */
-    :root {
-      --container-padding: 3rem; /* 48px */
-      --header-height: 5rem; /* 80px */
-      --section-spacing: 8rem; /* 128px */
-      --max-content-width: 1536px;
-    }
-  }
-  
-  /* Ultra Wide - Pantallas ultra anchas (opcional) */
-  @media (min-width: 1920px) {
-    /* 3xl: Desktop ultra ancho, monitores 4K */
-    :root {
-      --container-padding: 4rem; /* 64px */
-      --section-spacing: 10rem; /* 160px */
-      --max-content-width: 1792px; /* Contenido centrado */
-    }
-  }
+  /* Grid responsivo base */
+  --grid-gap: 1rem;                /* 16px */
+  --grid-cols: 1;                  /* Una columna en móvil */
 
-  /* 5. Estilos base globales */
-  body {
-    background-color: rgb(2 6 23); /* bg-slate-950 */
-    color: hsl(var(--foreground));
-    font-family: Poppins, system-ui, -apple-system, sans-serif;
-    font-feature-settings: "rlig" 1, "calt" 1;
-    /* Transición suave para el cambio de tema */
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-}
-
-/* 6. Configuración del Tema de Tailwind (@theme) */
-/* Aquí conectamos las variables CSS al sistema de utilidades de Tailwind */
-@theme {
-  /* Breakpoints - Puntos de ruptura personalizados para el sistema responsive */
-  --breakpoint-xs: 475px;    /* Extra small devices */
-  --breakpoint-sm: 640px;    /* Small devices - tablets pequeñas */
-  --breakpoint-md: 768px;    /* Medium devices - tablets */
-  --breakpoint-lg: 1024px;   /* Large devices - desktop pequeño */
-  --breakpoint-xl: 1280px;   /* Extra large devices - desktop estándar */
-  --breakpoint-2xl: 1536px;  /* 2X large devices - desktop grande */
-  --breakpoint-3xl: 1920px;  /* 3X large devices - ultra wide */
+  /* Tipografía responsiva */
+  --text-hero: 2rem;               /* 32px - Hero mobile */
+  --text-heading: 1.5rem;          /* 24px - Headings mobile */
+  --text-body: 1rem;               /* 16px - Texto base */
 
   /* Fuentes - Sintaxis correcta para Tailwind v4 */
   --font-family-sans: Poppins, system-ui, -apple-system, sans-serif;
   --font-family-body: Roboto, system-ui, sans-serif;
   --font-family-mono: "Fira Code", "Roboto Mono", ui-monospace, monospace;
+}
+/* Breakpoint: sm (640px) */
+@media (min-width: 640px) {
+  :root {
+    --container-padding: 1.5rem;    /* 24px */
+    --section-spacing: 2rem;        /* 32px */
+    --max-content-width: 640px;     /* Contenido limitado */
+    
+    --grid-gap: 1.5rem;             /* 24px */
+    --grid-cols: 2;                 /* Dos columnas */
+    
+    --text-hero: 2.5rem;            /* 40px */
+    --text-heading: 1.75rem;        /* 28px */
+  }
+}
 
-  /* Colores base - Conectamos las variables HSL al tema de Tailwind */
-  --color-background: hsl(var(--background));
-  --color-foreground: hsl(var(--foreground));
-  
-  /* Colores de marca primarios */
-  --color-primary: hsl(var(--primary));
-  --color-primary-foreground: hsl(var(--primary-foreground));
-  --color-primary-light: hsl(var(--primary-light));
-  
-  /* Colores de marca secundarios */
-  --color-secondary: hsl(var(--secondary));
-  --color-secondary-foreground: hsl(var(--secondary-foreground));
-  --color-secondary-light: hsl(var(--secondary-light));
-  
-  /* Color de acento */
-  --color-accent: hsl(var(--accent));
-  --color-accent-foreground: hsl(var(--accent-foreground));
+/* Breakpoint: md (768px) */
+@media (min-width: 768px) {
+  :root {
+    --container-padding: 2rem;      /* 32px */
+    --section-spacing: 3rem;        /* 48px */
+    --max-content-width: 768px;
+    --header-height: 4rem;          /* 64px - Header más alto */
+    
+    --grid-cols: 2;                 /* Mantener dos columnas */
+    
+    --text-hero: 3rem;              /* 48px */
+    --text-heading: 2rem;           /* 32px */
+  }
+}
 
-  /* Estados de UI */
-  --color-success: hsl(var(--success));
-  --color-success-foreground: hsl(var(--success-foreground));
-  --color-error: hsl(var(--error));
-  --color-error-foreground: hsl(var(--error-foreground));
-  --color-warning: hsl(var(--warning));
-  --color-warning-foreground: hsl(var(--warning-foreground));
-  --color-info: hsl(var(--info));
-  --color-info-foreground: hsl(var(--info-foreground));
-  
-  /* Alias para destructive */
-  --color-destructive: hsl(var(--destructive));
-  --color-destructive-foreground: hsl(var(--destructive-foreground));
+/* Breakpoint: lg (1024px) */
+@media (min-width: 1024px) {
+  :root {
+    --container-padding: 2.5rem;    /* 40px */
+    --section-spacing: 4rem;        /* 64px */
+    --max-content-width: 1024px;
+    
+    --grid-gap: 2rem;               /* 32px */
+    --grid-cols: 3;                 /* Tres columnas */
+    
+    --text-hero: 3.5rem;            /* 56px */
+    --text-heading: 2.25rem;        /* 36px */
+  }
+}
 
-  /* Colores auxiliares */
-  --color-muted: hsl(var(--muted));
-  --color-muted-foreground: hsl(var(--muted-foreground));
-  --color-border: hsl(var(--border));
+/* Breakpoint: xl (1280px) */
+@media (min-width: 1280px) {
+  :root {
+    --container-padding: 3rem;      /* 48px */
+    --section-spacing: 5rem;        /* 80px */
+    --max-content-width: 1280px;
+    
+    --grid-cols: 4;                 /* Cuatro columnas */
+    
+    --text-hero: 4rem;              /* 64px */
+    --text-heading: 2.5rem;         /* 40px */
+  }
+}
 
+/* Breakpoint: 2xl (1536px) */
+@media (min-width: 1536px) {
+  :root {
+    --container-padding: 3.5rem;    /* 56px */
+    --section-spacing: 6rem;        /* 96px */
+    --max-content-width: 1536px;
+    
+    --grid-cols: 4;                 /* Mantener cuatro columnas */
+    
+    --text-hero: 4.5rem;            /* 72px */
+    --text-heading: 3rem;           /* 48px */
+  }
+}
+
+/* 5. Variables CSS dinámicas para componentes custom */
+:root {
   /* Espaciado Responsivo - Variables dinámicas basadas en breakpoints */
   --spacing-container: var(--container-padding, 1rem);
   --spacing-section: var(--section-spacing, 2rem);
@@ -251,7 +126,7 @@
   --grid-cols-wide: 4;
 }
 
-/* 7. Clases Helper para Responsive Design */
+/* 6. Clases Helper para Responsive Design */
 @layer components {
   /* Container responsivo centralizado con padding dinámico */
   .container-responsive {
@@ -321,4 +196,4 @@
   .min-screen-minus-header {
     min-height: calc(100vh - var(--height-header));
   }
-}
+} 

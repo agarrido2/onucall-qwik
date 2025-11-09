@@ -1,4 +1,4 @@
-<!-- ARQUITECTUR_FOLDER -->
+<!-- ARQUITECTURA_FOLDER -->
 # **Arquitectura Canónica Definitiva para Qwik + Supabase**
 
 **Propósito**: Este documento establece la arquitectura y las reglas canónicas para la construcción de aplicaciones Qwik con secciones públicas y privadas. Su objetivo es servir como la **única fuente de verdad** para la organización del código, eliminando la ambigüedad y asegurando la escalabilidad y mantenibilidad del proyecto.
@@ -115,4 +115,119 @@ Esta es la estructura de directorios oficial y definitiva del proyecto. Es el pl
     * **Regla**: Este directorio es exclusivamente para endpoints de servidor (handlers `onGet`, `onPost`, etc.) que serán consumidos por servicios externos (ej. webhooks de Stripe, una API para una app móvil). No es para las `routeAction$` de tus formularios.
 * **`layout.tsx` (Raíz)**:
     * **Regla**: Es el lugar canónico para los proveedores de contexto globales, como `<AuthProvider>`, que deben estar disponibles en **toda** la aplicación. También es el lugar ideal para implementar el Auth Guard inicial que gestiona las redirecciones principales.
+
+---
+
+### **PARTE 4: PATRÓN HÍBRIDO - FEATURES COMPLEJAS**
+
+#### 4.1 Concepto
+
+Para **features complejas** con múltiples archivos relacionados (>5 archivos), se permite usar el patrón **Feature-Sliced Design** mediante la carpeta `src/features/`.
+
+Este patrón híbrido mantiene:
+- ✅ **`src/lib/`** → Core fundamental y servicios transversales
+- ✅ **`src/features/`** → Módulos específicos de funcionalidad compleja
+
+#### 4.2 Estructura de Features
+
+```markdown
+src/
+├── lib/                        # 🧠 Core fundamental (transversal)
+│   ├── auth/                   #    - Facade para autenticación (punto de entrada único)
+│   │   └── index.ts            #    - Re-exports: AuthProvider, useAuth, RouteClassifier
+│   ├── supabase/               #    - Cliente Supabase
+│   └── utils/                  #    - Utilidades genéricas
+│
+└── features/                   # 📦 Features complejas (Feature-Sliced Design)
+    └── auth/                   #    - Implementación detallada de autenticación
+        ├── auth-context.ts     #    - Definición del AuthContext
+        ├── hooks/              #    - Hooks específicos de auth
+        │   └── use-auth-context.ts
+        ├── schemas/            #    - Validaciones Zod para formularios de auth
+        │   └── auth-schemas.ts
+        ├── services/           #    - Helpers para server actions
+        │   └── auth-helpers.ts
+        ├── components/         #    - Componentes específicos de auth
+        │   └── UserProfileCard.tsx
+        └── index.ts            #    - Barrel export
+```
+
+#### 4.3 Reglas del Patrón Híbrido
+
+**🔷 Criterios para usar `src/features/[feature-name]/`:**
+
+1. ✅ Feature con **más de 5 archivos** relacionados
+2. ✅ Requiere **múltiples subcarpetas** (hooks, schemas, services, components)
+3. ✅ Tiene **lógica específica** no reutilizable en otras features
+4. ✅ Podría **crecer significativamente** (ej: agregar OAuth, MFA, roles)
+
+**Ejemplos válidos:** `auth`, `billing`, `notifications`, `workflows`
+
+**🔷 Usar `src/lib/[module]/` para:**
+
+1. ✅ Código **transversal** usado por múltiples features
+2. ✅ Servicios **fundamentales** (database, supabase, utils)
+3. ✅ Lógica **simple** (<5 archivos)
+
+**Ejemplos:** `supabase`, `database`, `utils`, `constants`
+
+#### 4.4 Patrón Facade - Punto de Entrada Único
+
+Para features en `src/features/`, **SIEMPRE** crea un facade en `src/lib/`:
+
+**Ejemplo: Sistema de Autenticación**
+
+```typescript
+// ✅ src/lib/auth/index.ts (FACADE - Punto de entrada único)
+export { AuthProvider } from '~/components/auth/AuthProvider'
+export { AuthContext } from '~/features/auth/auth-context'
+export { useAuth } from '~/features/auth/hooks/use-auth-context'
+export { RouteClassifier, getAuthRedirect } from '~/lib/routing/route-guards'
+export type { AuthContextValue } from '~/features/auth/auth-context'
+```
+
+**Patrón de Importación:**
+
+```typescript
+// ✅ CORRECTO: Importar desde lib/auth (facade)
+import { useAuth, AuthProvider, RouteClassifier } from '~/lib/auth'
+
+// ✅ CORRECTO: Features específicas cuando sea necesario
+import { authSchemas } from '~/features/auth'
+import { withSupabase } from '~/features/auth'
+import { UserProfileCard } from '~/features/auth'
+
+// ❌ INCORRECTO: No importar internals directamente
+import { useAuthContext } from '~/features/auth/hooks/use-auth-context'
+```
+
+#### 4.5 Flujo de Dependencias
+
+```
+routes/ (Orquestador)
+    ↓ importa
+lib/auth/ (Facade - API pública)
+    ↓ usa internamente
+features/auth/ (Implementación detallada)
+    ├── hooks/
+    ├── schemas/
+    ├── services/
+    └── components/
+```
+
+**Reglas de Oro:**
+
+1. 🚫 `routes/` → **NUNCA** importa desde `features/` directamente → usa `lib/` (facade)
+2. ✅ `lib/auth/` → puede re-exportar desde `features/auth/`
+3. 🚫 `features/auth/` → **NUNCA** importa desde `lib/auth/` (evitar ciclos)
+4. ✅ `features/auth/` → puede usar `lib/supabase/`, `lib/utils/` (servicios base)
+
+#### 4.6 Ventajas del Patrón Híbrido
+
+- ✅ **Escalabilidad**: Features complejas crecen sin saturar `lib/`
+- ✅ **Cohesión**: Archivos relacionados agrupados
+- ✅ **API Limpia**: Facade oculta complejidad interna
+- ✅ **Mantenibilidad**: Fácil encontrar y modificar código
+- ✅ **Compliance**: Respeta principios de arquitectura canónica
+
 ---

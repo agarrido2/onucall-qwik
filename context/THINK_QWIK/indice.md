@@ -42,10 +42,11 @@
 4.4. Patrones de organización de código
 4.5. Estrategias de testing
 4.6. Mejores prácticas de seguridad
-4.7. Guías de accesibilidad
+4.7. Mejores prácticas de accesibilidad
+4.8. Estándares de calidad del código (QUALITY_STANDARDS.md)
 
 ---
-## PARTE 5: APIS CRÍTICAS Y REACTIVIDAD
+## PARTE 5: APIS Y HOOKS ESENCIALES
 
 5.1. `useSignal()` vs `useStore()` (diferencias críticas)
 5.2. `PropFunction` vs `QRL` (paso de props)
@@ -198,11 +199,13 @@
 18.7. Prompts de instalación
 
 ---
-## PARTE 19: INTEGRACIÓN ECOSISTEMA
+## PARTE 19: INTEGRACIÓN ECOSISTEMA ⚠️
+
+> **⚠️ NOTA SOBRE AUTENTICACIÓN**: Los patrones de autenticación con Supabase mencionados en esta sección (19.2 y 19.3) **NO están actualmente implementados** en el proyecto. El sistema de autenticación está en el roadmap y será desarrollado próximamente. No intentes usar los patrones descritos en `GUIDE_AUTH_SUPA_QWIK.md` hasta que se complete la implementación.
 
 19.1. `qwikify$()` - Integración con React
-19.2. Patrones de uso con Supabase
-19.3. Proveedores de autenticación
+19.2. Patrones de uso con Supabase (🚧 ROADMAP)
+19.3. Proveedores de autenticación (🚧 ROADMAP)
 19.4. Integraciones con bases de datos
 19.5. Sistemas de pago (Stripe)
 19.6. Plataformas de analíticas
