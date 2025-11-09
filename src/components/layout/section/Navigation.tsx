@@ -114,8 +114,14 @@ export const Navigation = component$<NavigationProps>(({ isScrolled }) => {
       {/* Derecha - Acciones Desktop */}
       <div class="hidden items-center space-x-4 md:flex">
         <Link
+          href="/dashboard"
+          class="inline-flex items-center justify-center rounded-md border-2 border-white/30 px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-white/10 hover:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2"
+        >
+          Zona Clientes
+        </Link>
+        <Link
           href="/#contacto"
-          class="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-light focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
         >
           Contactar
         </Link>
@@ -199,8 +205,14 @@ export const Navigation = component$<NavigationProps>(({ isScrolled }) => {
             ))}
             <div class="flex flex-col space-y-3 pt-4 border-t border-white/20">
               <Link
+                href="/dashboard"
+                class="inline-flex items-center justify-center rounded-md border-2 border-white/30 px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-white/10 hover:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 w-full"
+              >
+                Zona Clientes
+              </Link>
+              <Link
                 href="/#contacto"
-                class="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full"
+                class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-light focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 w-full"
               >
                 Contactar
               </Link>
