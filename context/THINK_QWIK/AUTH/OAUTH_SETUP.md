@@ -255,7 +255,8 @@ En el dashboard, deberías ver tu email e ID de usuario. Verifica que:
 - [Supabase Auth - OAuth](https://supabase.com/docs/guides/auth/social-login)
 - [Google OAuth Setup](https://supabase.com/docs/guides/auth/social-login/auth-google)
 - [GitHub OAuth Setup](https://supabase.com/docs/guides/auth/social-login/auth-github)
-- [GUIDE_AUTH_SUPA_QWIK.md](./GUIDE_AUTH_SUPA_QWIK.md) - Implementación completa en Qwik
+- [GUIDE_AUTH_QWIK.md](./GUIDE_AUTH_QWIK.md) - Patrones universales de autenticación en Qwik
+- [PROVIDERS/SUPABASE.md](./PROVIDERS/SUPABASE.md) - Implementación completa con Supabase
 
 ---
 

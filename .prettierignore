@@ -35,3 +35,12 @@ bun.lock
 package-lock.json
 yarn.lock
 server
+
+# Documentation (context folder)
+context/
+
+# Test scripts (exclude from formatting)
+scripts/tests/
+
+# Public assets examples
+public/fonts/**/example.html

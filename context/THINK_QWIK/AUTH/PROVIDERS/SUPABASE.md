@@ -1,6 +1,23 @@
-# 🔐 Guía de Autenticación Supabase + Qwik
+# 🔐 Implementación de Auth con Supabase en Qwik
 
-> Sistema de autenticación completo, seguro y escalable para aplicaciones Qwik con Supabase.
+> **📘 PREREQUISITO**: Lee primero [GUIDE_AUTH_QWIK.md](../GUIDE_AUTH_QWIK.md) para entender los patrones universales de auth en Qwik antes de implementar con Supabase.
+
+---
+
+## 📊 Estado de Implementación en Este Proyecto
+
+| Feature | Estado | Código | Configuración | Notas |
+|---------|--------|--------|---------------|-------|
+| Email/Password | ✅ Implementado | ✅ Completo | ✅ Listo | Login, Register, Forgot Password |
+| OAuth Google | ✅ Código listo | ✅ Completo | ⏳ Pendiente | Ver [OAUTH_SETUP.md](../OAUTH_SETUP.md) |
+| OAuth GitHub | ⏸️ Futuro | ❌ Pendiente | ❌ Pendiente | Producto avanzado - Ver [TODO.md](/TODO.md) |
+| Email Verification | ⏸️ Pendiente | ❌ Pendiente | ❌ Pendiente | Ver [TODO.md](/TODO.md) |
+| Password Reset | ⏸️ Pendiente | ❌ Pendiente | ❌ Pendiente | Ver [TODO.md](/TODO.md) |
+| MFA/2FA | 💭 Futuro | ❌ | ❌ | Cuando producto madure |
+
+> **Última actualización**: 15 de noviembre de 2025
+
+---
 
 ## 📋 Tabla de Contenidos
 
@@ -78,6 +95,9 @@ type FutureProviders = 'github' | 'microsoft' | 'apple'
 ### Expandir OAuth Providers
 
 Cuando añadas un nuevo provider (ej. GitHub), sigue estos pasos:
+
+> **📘 Para configuración completa de OAuth Providers:**  
+> Ver [OAUTH_SETUP.md](./OAUTH_SETUP.md) - Guía paso a paso de Google/GitHub OAuth con configuración de credenciales, callbacks y troubleshooting.
 
 **1. Actualizar validación en** `src/routes/api/auth/oauth/index.ts`:
 ```typescript

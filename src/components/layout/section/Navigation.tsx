@@ -10,7 +10,7 @@ const Dropdown = component$<{ item: any }>(({ item }) => {
   return (
     <div class="relative">
       <button
-        class="text-[14px] font-bold text-gray-300 transition-colors duration-200 hover:text-white inline-flex items-center gap-1"
+        class="inline-flex items-center gap-1 text-[14px] font-bold text-gray-300 transition-colors duration-200 hover:text-white"
         onClick$={() => {
           isOpen.value = !isOpen.value;
         }}
@@ -24,7 +24,7 @@ const Dropdown = component$<{ item: any }>(({ item }) => {
         {item.text}
         <svg
           class={{
-            "w-4 h-4 transition-transform duration-200": true,
+            "h-4 w-4 transition-transform duration-200": true,
             "rotate-180": isOpen.value,
           }}
           fill="none"
@@ -41,7 +41,7 @@ const Dropdown = component$<{ item: any }>(({ item }) => {
       </button>
       {isOpen.value && (
         <div
-          class="absolute top-full left-0 mt-2 w-56 bg-gray-900/98 backdrop-blur-2xl border border-white/30 rounded-md shadow-xl p-2 z-50"
+          class="absolute top-full left-0 z-50 mt-2 w-56 rounded-md border border-white/30 bg-gray-900/98 p-2 shadow-xl backdrop-blur-2xl"
           onMouseEnter$={() => {
             isOpen.value = true;
           }}
@@ -53,7 +53,7 @@ const Dropdown = component$<{ item: any }>(({ item }) => {
             <Link
               key={subIndex}
               href={subItem.href || "#"}
-              class="block px-4 py-2 text-sm text-white hover:bg-white/20 rounded-md transition-colors"
+              class="block rounded-md px-4 py-2 text-sm text-white transition-colors hover:bg-white/20"
             >
               {subItem.text}
             </Link>
@@ -63,7 +63,6 @@ const Dropdown = component$<{ item: any }>(({ item }) => {
     </div>
   );
 });
-
 
 interface NavigationProps {
   isScrolled: boolean;
@@ -115,13 +114,13 @@ export const Navigation = component$<NavigationProps>(({ isScrolled }) => {
       <div class="hidden items-center space-x-4 md:flex">
         <Link
           href="/dashboard"
-          class="inline-flex items-center justify-center rounded-md border-2 border-white/30 px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-white/10 hover:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2"
+          class="inline-flex items-center justify-center rounded-md border-2 border-white/30 px-4 py-2 text-sm font-semibold text-white transition-all hover:border-white/50 hover:bg-white/10 focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:outline-none"
         >
           Zona Clientes
         </Link>
         <Link
           href="/#contacto"
-          class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-light focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+          class="bg-primary text-primary-foreground hover:bg-primary-light focus:ring-ring inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none"
         >
           Contactar
         </Link>
@@ -129,7 +128,7 @@ export const Navigation = component$<NavigationProps>(({ isScrolled }) => {
 
       {/* Mobile Menu Button */}
       <button
-        class="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/50 md:hidden"
+        class="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-white/10 focus:ring-2 focus:ring-white/50 focus:outline-none md:hidden"
         onClick$={toggleMobileMenu}
       >
         <svg
@@ -153,7 +152,7 @@ export const Navigation = component$<NavigationProps>(({ isScrolled }) => {
       {mobileMenuOpen.value && (
         <div
           class={{
-            "absolute left-0 right-0 top-full mt-4 py-4 transition-all duration-300 md:hidden": true,
+            "absolute top-full right-0 left-0 mt-4 py-4 transition-all duration-300 md:hidden": true,
             "border-t border-white/20": !isScrolled,
             "border-t border-white/30": isScrolled,
           }}
@@ -164,10 +163,10 @@ export const Navigation = component$<NavigationProps>(({ isScrolled }) => {
                 {item.items && item.items.length > 0 ? (
                   // Collapsible con @qwik-ui/headless para móvil
                   <Collapsible.Root class="border-b border-white/10 pb-2">
-                    <Collapsible.Trigger class="w-full flex items-center justify-between py-2 text-sm font-medium text-gray-300 hover:text-white">
+                    <Collapsible.Trigger class="flex w-full items-center justify-between py-2 text-sm font-medium text-gray-300 hover:text-white">
                       {item.text}
                       <svg
-                        class="w-4 h-4 transition-transform duration-200"
+                        class="h-4 w-4 transition-transform duration-200"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -180,12 +179,12 @@ export const Navigation = component$<NavigationProps>(({ isScrolled }) => {
                         />
                       </svg>
                     </Collapsible.Trigger>
-                    <Collapsible.Content class="pt-2 pl-4 space-y-2">
+                    <Collapsible.Content class="space-y-2 pt-2 pl-4">
                       {item.items.map((subItem, subIndex) => (
                         <Link
                           key={subIndex}
                           href={subItem.href || "#"}
-                          class="block py-1 text-xs text-gray-300 hover:text-white transition-colors"
+                          class="block py-1 text-xs text-gray-300 transition-colors hover:text-white"
                         >
                           {subItem.text}
                         </Link>
@@ -203,16 +202,16 @@ export const Navigation = component$<NavigationProps>(({ isScrolled }) => {
                 )}
               </div>
             ))}
-            <div class="flex flex-col space-y-3 pt-4 border-t border-white/20">
+            <div class="flex flex-col space-y-3 border-t border-white/20 pt-4">
               <Link
                 href="/dashboard"
-                class="inline-flex items-center justify-center rounded-md border-2 border-white/30 px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-white/10 hover:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 w-full"
+                class="inline-flex w-full items-center justify-center rounded-md border-2 border-white/30 px-4 py-2 text-sm font-semibold text-white transition-all hover:border-white/50 hover:bg-white/10 focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:outline-none"
               >
                 Zona Clientes
               </Link>
               <Link
                 href="/#contacto"
-                class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-light focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 w-full"
+                class="bg-primary text-primary-foreground hover:bg-primary-light focus:ring-ring inline-flex w-full items-center justify-center rounded-md px-4 py-2 text-sm font-semibold transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none"
               >
                 Contactar
               </Link>

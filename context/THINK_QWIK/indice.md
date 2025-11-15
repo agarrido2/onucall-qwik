@@ -201,7 +201,7 @@
 ---
 ## PARTE 19: INTEGRACIÓN ECOSISTEMA ⚠️
 
-> **⚠️ NOTA SOBRE AUTENTICACIÓN**: Los patrones de autenticación con Supabase mencionados en esta sección (19.2 y 19.3) **NO están actualmente implementados** en el proyecto. El sistema de autenticación está en el roadmap y será desarrollado próximamente. No intentes usar los patrones descritos en `GUIDE_AUTH_SUPA_QWIK.md` hasta que se complete la implementación.
+> **⚠️ NOTA SOBRE AUTENTICACIÓN**: Los patrones de autenticación con Supabase mencionados en esta sección (19.2 y 19.3) **NO están actualmente implementados** en el proyecto. El sistema de autenticación está en el roadmap y será desarrollado próximamente. No intentes usar los patrones descritos en `AUTH/GUIDE_AUTH_QWIK.md` y `AUTH/PROVIDERS/SUPABASE.md` hasta que se complete la implementación.
 
 19.1. `qwikify$()` - Integración con React
 19.2. Patrones de uso con Supabase (🚧 ROADMAP)

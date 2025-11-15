@@ -1,9 +1,9 @@
 /**
  * Landing Page - Onucall
- * 
+ *
  * Página principal de la landing page de Onucall.
  * Implementación completa según LANDING_PROMPT.md
- * 
+ *
  * [CITE: LANDING_PROMPT.md] - Briefing completo del producto
  * [CITE: UX_GUIDE.md] - Arquitectura de landing pages de alta conversión
  * [CITE: TAILWIND_QWIK_GUIDE.md] - Organización modular de componentes
@@ -11,7 +11,7 @@
 
 import { component$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
-import { routeAction$, zod$, z } from '@builder.io/qwik-city';
+import { routeAction$, zod$, z } from "@builder.io/qwik-city";
 
 import { HeroSection } from "~/components/layout/HeroSection";
 import { DemoSection } from "~/components/layout/section/DemoSection";
@@ -26,36 +26,33 @@ import { FinalCTASection } from "~/components/layout/section/FinalCTASection";
 
 /**
  * Demo Action - Procesa solicitud de llamada demo
- * 
+ *
  * [CITE: CAPITULO-9.md] - routeAction$ para mutaciones
  * [CITE: QUALITY_STANDARDS.md] - Validación server-side con Zod
  */
 const demoSchema = z.object({
-  name: z.string().min(2, 'Mínimo 2 caracteres'),
-  email: z.string().email('Email inválido'),
-  phone: z.string().min(9, 'Teléfono inválido'),
-  productType: z.enum(['coches', 'informatica', 'muebles', 'belleza'], {
-    errorMap: () => ({ message: 'Selecciona un tipo de producto' }),
+  name: z.string().min(2, "Mínimo 2 caracteres"),
+  email: z.string().email("Email inválido"),
+  phone: z.string().min(9, "Teléfono inválido"),
+  productType: z.enum(["coches", "informatica", "muebles", "belleza"], {
+    errorMap: () => ({ message: "Selecciona un tipo de producto" }),
   }),
 });
 
-export const useDemoAction = routeAction$(
-  async (values) => {
-    // TODO: Integrar con Retell AI / Zadarma para iniciar llamada
-    console.log('Demo solicitada:', values);
-    
-    return {
-      success: true,
-      message: 'Recibirás tu llamada en breve. Prepárate para hablar con nuestro agente IA.',
-    };
-  },
-  zod$(demoSchema)
-);
+export const useDemoAction = routeAction$(async (values) => {
+  // TODO: Integrar con Retell AI / Zadarma para iniciar llamada
+  console.log("Demo solicitada:", values);
 
+  return {
+    success: true,
+    message:
+      "Recibirás tu llamada en breve. Prepárate para hablar con nuestro agente IA.",
+  };
+}, zod$(demoSchema));
 
 export default component$(() => {
   const demoAction = useDemoAction();
-  
+
   return (
     <main>
       {/* Hero Section */}
@@ -96,11 +93,13 @@ export const head: DocumentHead = {
   meta: [
     {
       name: "description",
-      content: "Agente comercial con IA por voz disponible 24/7. Atiende dudas técnicas, cualifica leads y agenda visitas de venta con voz profesional.",
+      content:
+        "Agente comercial con IA por voz disponible 24/7. Atiende dudas técnicas, cualifica leads y agenda visitas de venta con voz profesional.",
     },
     {
       name: "keywords",
-      content: "IA, agente comercial, voz artificial, lead qualification, automatización, ventas",
+      content:
+        "IA, agente comercial, voz artificial, lead qualification, automatización, ventas",
     },
     {
       name: "author",
@@ -113,7 +112,8 @@ export const head: DocumentHead = {
     },
     {
       property: "og:description",
-      content: "Agente comercial con IA por voz disponible 24/7. Configúralo en minutos, sin complicaciones.",
+      content:
+        "Agente comercial con IA por voz disponible 24/7. Configúralo en minutos, sin complicaciones.",
     },
     {
       property: "og:type",
@@ -146,7 +146,8 @@ export const head: DocumentHead = {
     },
     {
       name: "twitter:description",
-      content: "Agente comercial con IA por voz disponible 24/7. Configúralo en minutos, sin complicaciones.",
+      content:
+        "Agente comercial con IA por voz disponible 24/7. Configúralo en minutos, sin complicaciones.",
     },
     {
       name: "twitter:image",

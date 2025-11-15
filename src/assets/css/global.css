@@ -24,7 +24,6 @@
 @import "./poppins.css";
 @import "./roboto.css";
 
-
 /* ============================================================================
    2. VARIABLES DE COLOR (LIGHT/DARK MODE)
    ============================================================================ */
@@ -39,86 +38,85 @@
   /* TEMA LIGHT (Por defecto) */
   :root {
     /* Colores Base */
-    --background: 0 0% 100%;              /* #ffffff - Fondo principal */
-    --foreground: 229 33% 15%;            /* #1d2033 - Texto principal */
-    
+    --background: 0 0% 100%; /* #ffffff - Fondo principal */
+    --foreground: 229 33% 15%; /* #1d2033 - Texto principal */
+
     /* Colores Primarios */
-    --primary: 211 100% 46%;              /* #006ce9 - Botones principales, enlaces */
-    --primary-light: 196 92% 53%;         /* #18b6f6 - Hover primario */
-    --primary-foreground: 0 0% 100%;      /* Texto sobre primary (blanco) */
-    
+    --primary: 211 100% 46%; /* #006ce9 - Botones principales, enlaces */
+    --primary-light: 196 92% 53%; /* #18b6f6 - Hover primario */
+    --primary-foreground: 0 0% 100%; /* Texto sobre primary (blanco) */
+
     /* Colores Secundarios */
-    --secondary: 261 52% 50%;             /* #713fc2 - Acciones secundarias */
-    --secondary-light: 261 85% 73%;       /* #ac7ff4 - Hover secundario */
-    --secondary-foreground: 0 0% 100%;    /* Texto sobre secondary (blanco) */
-    
+    --secondary: 261 52% 50%; /* #713fc2 - Acciones secundarias */
+    --secondary-light: 261 85% 73%; /* #ac7ff4 - Hover secundario */
+    --secondary-foreground: 0 0% 100%; /* Texto sobre secondary (blanco) */
+
     /* Colores de Acento */
-    --accent: 261 85% 73%;                /* #ac7ff4 - Elementos destacados */
-    --accent-foreground: 229 33% 15%;     /* Texto sobre accent */
-    
+    --accent: 261 85% 73%; /* #ac7ff4 - Elementos destacados */
+    --accent-foreground: 229 33% 15%; /* Texto sobre accent */
+
     /* Colores de Estado */
-    --success: 142 76% 36%;               /* #16a34a - Éxito, badges positivos */
-    --success-foreground: 0 0% 100%;      /* Texto sobre success */
-    
-    --error: 0 84% 60%;                   /* #ef4444 - Errores, validaciones */
-    --error-foreground: 0 0% 100%;        /* Texto sobre error */
-    
-    --warning: 38 92% 50%;                /* #f59e0b - Advertencias */
-    --warning-foreground: 229 33% 15%;    /* Texto sobre warning (oscuro) */
-    
-    --info: 199 89% 48%;                  /* #0ea5e9 - Mensajes informativos */
-    --info-foreground: 0 0% 100%;         /* Texto sobre info */
-    
+    --success: 142 76% 36%; /* #16a34a - Éxito, badges positivos */
+    --success-foreground: 0 0% 100%; /* Texto sobre success */
+
+    --error: 0 84% 60%; /* #ef4444 - Errores, validaciones */
+    --error-foreground: 0 0% 100%; /* Texto sobre error */
+
+    --warning: 38 92% 50%; /* #f59e0b - Advertencias */
+    --warning-foreground: 229 33% 15%; /* Texto sobre warning (oscuro) */
+
+    --info: 199 89% 48%; /* #0ea5e9 - Mensajes informativos */
+    --info-foreground: 0 0% 100%; /* Texto sobre info */
+
     /* Colores Neutrales */
-    --muted: 210 40% 96%;                 /* Fondos secundarios (cards, hover) */
-    --muted-foreground: 215 16% 47%;      /* Texto atenuado (descripciones) */
-    
-    --border: 214 32% 91%;                /* Bordes (inputs, cards, separadores) */
-    --ring: 211 100% 46%;                 /* Focus ring (mismo que primary) */
+    --muted: 210 40% 96%; /* Fondos secundarios (cards, hover) */
+    --muted-foreground: 215 16% 47%; /* Texto atenuado (descripciones) */
+
+    --border: 214 32% 91%; /* Bordes (inputs, cards, separadores) */
+    --ring: 211 100% 46%; /* Focus ring (mismo que primary) */
   }
 
   /* TEMA DARK (Dashboard) */
   .dark {
     /* Colores Base Invertidos */
-    --background: 229 33% 8%;             /* #0f1116 - Fondo oscuro principal */
-    --foreground: 0 0% 98%;               /* #fafafa - Texto claro principal */
-    
+    --background: 229 33% 8%; /* #0f1116 - Fondo oscuro principal */
+    --foreground: 0 0% 98%; /* #fafafa - Texto claro principal */
+
     /* Colores Primarios (Más claros en dark) */
-    --primary: 196 92% 53%;               /* #18b6f6 - Azul más brillante */
-    --primary-light: 211 100% 46%;        /* #006ce9 - Hover (azul más oscuro) */
-    --primary-foreground: 229 33% 8%;     /* Texto sobre primary (oscuro) */
-    
+    --primary: 196 92% 53%; /* #18b6f6 - Azul más brillante */
+    --primary-light: 211 100% 46%; /* #006ce9 - Hover (azul más oscuro) */
+    --primary-foreground: 229 33% 8%; /* Texto sobre primary (oscuro) */
+
     /* Colores Secundarios (Más claros en dark) */
-    --secondary: 261 85% 73%;             /* #ac7ff4 - Morado más claro */
-    --secondary-light: 261 52% 50%;       /* #713fc2 - Hover (morado más oscuro) */
-    --secondary-foreground: 229 33% 8%;   /* Texto sobre secondary (oscuro) */
-    
+    --secondary: 261 85% 73%; /* #ac7ff4 - Morado más claro */
+    --secondary-light: 261 52% 50%; /* #713fc2 - Hover (morado más oscuro) */
+    --secondary-foreground: 229 33% 8%; /* Texto sobre secondary (oscuro) */
+
     /* Colores de Acento */
-    --accent: 261 85% 73%;                /* #ac7ff4 - Mantener acento claro */
-    --accent-foreground: 229 33% 8%;      /* Texto sobre accent (oscuro) */
-    
+    --accent: 261 85% 73%; /* #ac7ff4 - Mantener acento claro */
+    --accent-foreground: 229 33% 8%; /* Texto sobre accent (oscuro) */
+
     /* Colores de Estado (Ajustados para mejor contraste) */
-    --success: 142 76% 45%;               /* Verde más claro */
-    --success-foreground: 229 33% 8%;     /* Texto oscuro */
-    
-    --error: 0 84% 65%;                   /* Rojo más claro */
-    --error-foreground: 229 33% 8%;       /* Texto oscuro */
-    
-    --warning: 38 92% 55%;                /* Amarillo más claro */
-    --warning-foreground: 229 33% 8%;     /* Texto oscuro */
-    
-    --info: 199 89% 55%;                  /* Azul info más claro */
-    --info-foreground: 229 33% 8%;        /* Texto oscuro */
-    
+    --success: 142 76% 45%; /* Verde más claro */
+    --success-foreground: 229 33% 8%; /* Texto oscuro */
+
+    --error: 0 84% 65%; /* Rojo más claro */
+    --error-foreground: 229 33% 8%; /* Texto oscuro */
+
+    --warning: 38 92% 55%; /* Amarillo más claro */
+    --warning-foreground: 229 33% 8%; /* Texto oscuro */
+
+    --info: 199 89% 55%; /* Azul info más claro */
+    --info-foreground: 229 33% 8%; /* Texto oscuro */
+
     /* Colores Neutrales (Fondos elevados) */
-    --muted: 229 33% 12%;                 /* Fondos elevados (cards) */
-    --muted-foreground: 215 16% 65%;      /* Texto atenuado claro */
-    
-    --border: 229 33% 20%;                /* Bordes más oscuros */
-    --ring: 196 92% 53%;                  /* Focus ring (primary claro) */
+    --muted: 229 33% 12%; /* Fondos elevados (cards) */
+    --muted-foreground: 215 16% 65%; /* Texto atenuado claro */
+
+    --border: 229 33% 20%; /* Bordes más oscuros */
+    --ring: 196 92% 53%; /* Focus ring (primary claro) */
   }
 }
-
 
 /* ============================================================================
    3. THEME DE TAILWIND (Conectar variables CSS a utilidades)
@@ -134,42 +132,41 @@
   /* Colores Semánticos */
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
-  
+
   --color-primary: hsl(var(--primary));
   --color-primary-light: hsl(var(--primary-light));
   --color-primary-foreground: hsl(var(--primary-foreground));
-  
+
   --color-secondary: hsl(var(--secondary));
   --color-secondary-light: hsl(var(--secondary-light));
   --color-secondary-foreground: hsl(var(--secondary-foreground));
-  
+
   --color-accent: hsl(var(--accent));
   --color-accent-foreground: hsl(var(--accent-foreground));
-  
+
   --color-success: hsl(var(--success));
   --color-success-foreground: hsl(var(--success-foreground));
-  
+
   --color-error: hsl(var(--error));
   --color-error-foreground: hsl(var(--error-foreground));
-  
+
   --color-warning: hsl(var(--warning));
   --color-warning-foreground: hsl(var(--warning-foreground));
-  
+
   --color-info: hsl(var(--info));
   --color-info-foreground: hsl(var(--info-foreground));
-  
+
   --color-muted: hsl(var(--muted));
   --color-muted-foreground: hsl(var(--muted-foreground));
-  
+
   --color-border: hsl(var(--border));
   --color-ring: hsl(var(--ring));
-  
+
   /* Fuentes (Sintaxis Tailwind v4) */
   --font-family-sans: Poppins, system-ui, -apple-system, sans-serif;
   --font-family-body: Roboto, system-ui, sans-serif;
   --font-family-mono: "Fira Code", "Roboto Mono", ui-monospace, monospace;
 }
-
 
 /* ============================================================================
    4. VARIABLES RESPONSIVAS (Espaciado, Tipografía, Layout)
@@ -183,94 +180,93 @@
 /* Mobile (base) - Diseño por defecto sin media query */
 :root {
   /* Espaciado Responsivo */
-  --container-padding: 1rem;        /* 16px */
-  --section-spacing: 1.5rem;        /* 24px */
-  --header-height: 3.5rem;          /* 56px */
-  --max-content-width: 100%;        /* Sin límite en móvil */
-  
+  --container-padding: 1rem; /* 16px */
+  --section-spacing: 1.5rem; /* 24px */
+  --header-height: 3.5rem; /* 56px */
+  --max-content-width: 100%; /* Sin límite en móvil */
+
   /* Grid Responsivo */
-  --grid-gap: 1rem;                 /* 16px */
-  --grid-cols: 1;                   /* 1 columna */
-  
+  --grid-gap: 1rem; /* 16px */
+  --grid-cols: 1; /* 1 columna */
+
   /* Tipografía Responsiva */
-  --text-hero: 2rem;                /* 32px */
-  --text-heading: 1.5rem;           /* 24px */
-  --text-body: 1rem;                /* 16px */
+  --text-hero: 2rem; /* 32px */
+  --text-heading: 1.5rem; /* 24px */
+  --text-body: 1rem; /* 16px */
 }
 
 /* Breakpoint: sm (640px) */
 @media (min-width: 640px) {
   :root {
-    --container-padding: 1.5rem;    /* 24px */
-    --section-spacing: 2rem;        /* 32px */
+    --container-padding: 1.5rem; /* 24px */
+    --section-spacing: 2rem; /* 32px */
     --max-content-width: 640px;
-    
-    --grid-gap: 1.5rem;             /* 24px */
-    --grid-cols: 2;                 /* 2 columnas */
-    
-    --text-hero: 2.5rem;            /* 40px */
-    --text-heading: 1.75rem;        /* 28px */
+
+    --grid-gap: 1.5rem; /* 24px */
+    --grid-cols: 2; /* 2 columnas */
+
+    --text-hero: 2.5rem; /* 40px */
+    --text-heading: 1.75rem; /* 28px */
   }
 }
 
 /* Breakpoint: md (768px) */
 @media (min-width: 768px) {
   :root {
-    --container-padding: 2rem;      /* 32px */
-    --section-spacing: 3rem;        /* 48px */
+    --container-padding: 2rem; /* 32px */
+    --section-spacing: 3rem; /* 48px */
     --max-content-width: 768px;
-    --header-height: 4rem;          /* 64px */
-    
+    --header-height: 4rem; /* 64px */
+
     --grid-cols: 2;
-    
-    --text-hero: 3rem;              /* 48px */
-    --text-heading: 2rem;           /* 32px */
+
+    --text-hero: 3rem; /* 48px */
+    --text-heading: 2rem; /* 32px */
   }
 }
 
 /* Breakpoint: lg (1024px) */
 @media (min-width: 1024px) {
   :root {
-    --container-padding: 2.5rem;    /* 40px */
-    --section-spacing: 4rem;        /* 64px */
+    --container-padding: 2.5rem; /* 40px */
+    --section-spacing: 4rem; /* 64px */
     --max-content-width: 1024px;
-    
-    --grid-gap: 2rem;               /* 32px */
-    --grid-cols: 3;                 /* 3 columnas */
-    
-    --text-hero: 3.5rem;            /* 56px */
-    --text-heading: 2.25rem;        /* 36px */
+
+    --grid-gap: 2rem; /* 32px */
+    --grid-cols: 3; /* 3 columnas */
+
+    --text-hero: 3.5rem; /* 56px */
+    --text-heading: 2.25rem; /* 36px */
   }
 }
 
 /* Breakpoint: xl (1280px) */
 @media (min-width: 1280px) {
   :root {
-    --container-padding: 3rem;      /* 48px */
-    --section-spacing: 5rem;        /* 80px */
+    --container-padding: 3rem; /* 48px */
+    --section-spacing: 5rem; /* 80px */
     --max-content-width: 1280px;
-    
-    --grid-cols: 4;                 /* 4 columnas */
-    
-    --text-hero: 4rem;              /* 64px */
-    --text-heading: 2.5rem;         /* 40px */
+
+    --grid-cols: 4; /* 4 columnas */
+
+    --text-hero: 4rem; /* 64px */
+    --text-heading: 2.5rem; /* 40px */
   }
 }
 
 /* Breakpoint: 2xl (1536px) */
 @media (min-width: 1536px) {
   :root {
-    --container-padding: 3.5rem;    /* 56px */
-    --section-spacing: 6rem;        /* 96px */
+    --container-padding: 3.5rem; /* 56px */
+    --section-spacing: 6rem; /* 96px */
     --max-content-width: 1536px;
-    
+
     --grid-cols: 4;
-    
-    --text-hero: 4.5rem;            /* 72px */
-    --text-heading: 3rem;           /* 48px */
+
+    --text-hero: 4.5rem; /* 72px */
+    --text-heading: 3rem; /* 48px */
   }
 }
-
 
 /* ============================================================================
    5. COMPONENTES REUTILIZABLES (@layer components)
@@ -345,7 +341,6 @@
     outline-offset: 2px;
   }
 }
-
 
 /* ============================================================================
    6. OPTIMIZACIONES PARA ANIMACIONES (Motion One)

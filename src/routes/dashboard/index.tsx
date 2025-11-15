@@ -1,19 +1,19 @@
-import { component$ } from '@builder.io/qwik'
-import { useAuth } from '~/lib/auth'
-import { useAuthGuard } from '../layout'
+import { component$ } from "@builder.io/qwik";
+import { useAuth } from "~/lib/auth";
+import { useAuthGuard } from "../layout";
 
 /**
  * Dashboard Page (Protegida)
- * 
+ *
  * [CITE: GUIDE_AUTH_SUPA_QWIK.md] - Ruta protegida por el guard global
  * [CITE: UX_GUIDE.md] - Feedback al usuario con información de sesión
  */
 export default component$(() => {
-  const auth = useAuth()
-  const authData = useAuthGuard()
-  
+  const auth = useAuth();
+  const authData = useAuthGuard();
+
   // Usar datos del guard si auth.user está null (durante hidratación)
-  const user = auth.user || authData.value.user
+  const user = auth.user || authData.value.user;
 
   return (
     <div class="min-h-screen bg-gray-50">
@@ -27,12 +27,10 @@ export default component$(() => {
               </div>
             </div>
             <div class="flex items-center">
-              <span class="text-sm text-gray-700 mr-4">
-                {user?.email}
-              </span>
+              <span class="mr-4 text-sm text-gray-700">{user?.email}</span>
               <button
                 onClick$={auth.logout}
-                class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
               >
                 Cerrar Sesión
               </button>
@@ -50,7 +48,8 @@ export default component$(() => {
               ¡Bienvenido al Dashboard!
             </h2>
             <p class="mt-2 text-sm text-gray-600">
-              Has iniciado sesión correctamente con: <strong>{user?.email}</strong>
+              Has iniciado sesión correctamente con:{" "}
+              <strong>{user?.email}</strong>
             </p>
 
             <div class="mt-6 border-t border-gray-200 pt-6">
@@ -64,14 +63,14 @@ export default component$(() => {
                 </div>
                 <div>
                   <dt class="text-sm font-medium text-gray-500">ID</dt>
-                  <dd class="mt-1 text-sm text-gray-900 font-mono">
+                  <dd class="mt-1 font-mono text-sm text-gray-900">
                     {user?.id}
                   </dd>
                 </div>
                 <div>
                   <dt class="text-sm font-medium text-gray-500">Estado</dt>
                   <dd class="mt-1">
-                    <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                    <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset">
                       Autenticado
                     </span>
                   </dd>
@@ -102,8 +101,9 @@ export default component$(() => {
                   Sistema de Autenticación Activo
                 </h3>
                 <p class="mt-2 text-sm text-blue-700">
-                  El sistema de autenticación con Supabase está funcionando correctamente.
-                  Esta es una ruta protegida que solo es accesible para usuarios autenticados.
+                  El sistema de autenticación con Supabase está funcionando
+                  correctamente. Esta es una ruta protegida que solo es
+                  accesible para usuarios autenticados.
                 </p>
               </div>
             </div>
@@ -111,5 +111,5 @@ export default component$(() => {
         </div>
       </main>
     </div>
-  )
-})
+  );
+});

@@ -273,6 +273,9 @@ export default component$(() => {
 });
 ```
 
+> **📘 Para implementación detallada de HTML semántico y SEO:**  
+> Ver [SEO_A11Y_GUIDE.md](./SEO_A11Y_GUIDE.md) - Reglas no negociables de SEO y accesibilidad con ejemplos prácticos de metadatos, sitemap, robots.txt y optimización de Core Web Vitals.
+
 ---
 
 ## 5. SEGURO

@@ -1,49 +1,51 @@
-import { component$, useSignal } from '@builder.io/qwik'
-import { routeAction$, Form, zod$ } from '@builder.io/qwik-city'
-import { createServerSupabaseClient } from '~/lib/supabase'
-import { forgotPasswordSchema } from '~/features/auth/schemas/auth-schemas'
+import { component$, useSignal } from "@builder.io/qwik";
+import { routeAction$, Form, zod$ } from "@builder.io/qwik-city";
+import { createServerSupabaseClient } from "~/lib/supabase";
+import { forgotPasswordSchema } from "~/features/auth/schemas/auth-schemas";
 
 /**
  * Forgot Password Action
- * 
+ *
  * [CITE: CAPITULO-9.md] - routeAction$ para mutaciones
  * [CITE: QUALITY_STANDARDS.md] - Seguridad: Validación server-side
  */
 export const useForgotPasswordAction = routeAction$(
   async (values, requestEvent) => {
-    const supabase = createServerSupabaseClient(requestEvent)
+    const supabase = createServerSupabaseClient(requestEvent);
 
     // Obtener la URL base del sitio
-    const siteUrl = requestEvent.env.get('PUBLIC_SITE_URL') || requestEvent.url.origin
+    const siteUrl =
+      requestEvent.env.get("PUBLIC_SITE_URL") || requestEvent.url.origin;
 
     const { error } = await supabase.auth.resetPasswordForEmail(values.email, {
       redirectTo: `${siteUrl}/reset-password`,
-    })
+    });
 
     if (error) {
       return {
         success: false,
         error: error.message,
-      }
+      };
     }
 
     return {
       success: true,
-      message: 'Revisa tu email. Te hemos enviado un enlace para restablecer tu contraseña.',
-    }
+      message:
+        "Revisa tu email. Te hemos enviado un enlace para restablecer tu contraseña.",
+    };
   },
-  zod$(forgotPasswordSchema)
-)
+  zod$(forgotPasswordSchema),
+);
 
 /**
  * Forgot Password Page
- * 
+ *
  * [CITE: UX_GUIDE.md] - Estados de loading/error/success obligatorios
  * [CITE: QUALITY_STANDARDS.md] - Accesible: Labels, ARIA, semántica
  */
 export default component$(() => {
-  const forgotPasswordAction = useForgotPasswordAction()
-  const isLoading = useSignal(false)
+  const forgotPasswordAction = useForgotPasswordAction();
+  const isLoading = useSignal(false);
 
   return (
     <div class="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
@@ -54,7 +56,8 @@ export default component$(() => {
             Recuperar Contraseña
           </h2>
           <p class="mt-2 text-center text-sm text-gray-600">
-            Ingresa tu email y te enviaremos un enlace para restablecer tu contraseña
+            Ingresa tu email y te enviaremos un enlace para restablecer tu
+            contraseña
           </p>
         </div>
 
@@ -108,7 +111,7 @@ export default component$(() => {
           <div>
             <label
               for="email"
-              class="block text-sm font-medium leading-6 text-gray-900"
+              class="block text-sm leading-6 font-medium text-gray-900"
             >
               Correo electrónico
             </label>
@@ -119,9 +122,11 @@ export default component$(() => {
                 type="email"
                 autoComplete="email"
                 required
-                class="block w-full rounded-md border-0 px-3 py-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                class="block w-full rounded-md border-0 px-3 py-2 text-gray-900 ring-1 ring-gray-300 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-600 focus:ring-inset sm:text-sm sm:leading-6"
                 placeholder="tu@email.com"
-                disabled={isLoading.value || forgotPasswordAction.value?.success}
+                disabled={
+                  isLoading.value || forgotPasswordAction.value?.success
+                }
               />
             </div>
           </div>
@@ -131,7 +136,7 @@ export default component$(() => {
             <button
               type="submit"
               disabled={isLoading.value || forgotPasswordAction.value?.success}
-              class="group relative flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
+              class="group relative flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:opacity-50"
               aria-label="Enviar enlace de recuperación"
             >
               {isLoading.value ? (
@@ -156,5 +161,5 @@ export default component$(() => {
         </Form>
       </div>
     </div>
-  )
-})
+  );
+});

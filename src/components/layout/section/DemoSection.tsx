@@ -1,13 +1,13 @@
-import { component$, useSignal } from '@builder.io/qwik';
-import { Form } from '@builder.io/qwik-city';
-import type { ActionStore } from '@builder.io/qwik-city';
+import { component$, useSignal } from "@builder.io/qwik";
+import { Form } from "@builder.io/qwik-city";
+import type { ActionStore } from "@builder.io/qwik-city";
 
 /**
  * Demo Section - Pruébalo tú mismo
- * 
+ *
  * Permite al usuario solicitar una llamada de demostración
  * con el agente IA de OnuCall.
- * 
+ *
  * [CITE: LANDING_PROMPT.md - DemoSection]
  * [CITE: QUALITY_STANDARDS.md - Validación con Zod]
  */
@@ -20,40 +20,57 @@ export const DemoSection = component$<DemoSectionProps>(({ demoAction }) => {
   const isLoading = useSignal(false);
 
   return (
-    <section id="demo" class="relative bg-gradient-to-b from-gray-50 to-white py-20">
+    <section
+      id="demo"
+      class="relative bg-gradient-to-b from-gray-50 to-white py-20"
+    >
       <div class="container mx-auto px-4">
-        <div class="max-w-3xl mx-auto text-center">
+        <div class="mx-auto max-w-3xl text-center">
           {/* Título */}
-          <h2 class="text-4xl font-bold text-gray-900 sm:text-5xl mb-6">
-            Escúchalo tú mismo. Recibe una llamada de nuestro agente comercial AI
+          <h2 class="mb-6 text-4xl font-bold text-gray-900 sm:text-5xl">
+            Escúchalo tú mismo. Recibe una llamada de nuestro agente comercial
+            AI
           </h2>
-          
-          <p class="text-xl text-gray-600 mb-12">
-            Selecciona el tipo de producto sobre el que quieres que el agente te asesore 
-            y descubre cómo Onucall convierte tus llamadas.
+
+          <p class="mb-12 text-xl text-gray-600">
+            Selecciona el tipo de producto sobre el que quieres que el agente te
+            asesore y descubre cómo Onucall convierte tus llamadas.
           </p>
 
           {/* Formulario */}
-          <Form action={demoAction} class="bg-white rounded-2xl shadow-xl p-8 space-y-6">
+          <Form
+            action={demoAction}
+            class="space-y-6 rounded-2xl bg-white p-8 shadow-xl"
+          >
             {/* Success Message */}
             {demoAction.value?.success && (
-              <div class="rounded-lg bg-green-50 p-4 border border-green-200" role="alert">
+              <div
+                class="rounded-lg border border-green-200 bg-green-50 p-4"
+                role="alert"
+              >
                 <p class="text-sm text-green-800">{demoAction.value.message}</p>
               </div>
             )}
 
             {/* Error Message */}
             {demoAction.value?.failed && (
-              <div class="rounded-lg bg-red-50 p-4 border border-red-200" role="alert">
+              <div
+                class="rounded-lg border border-red-200 bg-red-50 p-4"
+                role="alert"
+              >
                 <p class="text-sm text-red-800">
-                  {demoAction.value.formErrors?.join(', ') || 'Error al procesar la solicitud'}
+                  {demoAction.value.formErrors?.join(", ") ||
+                    "Error al procesar la solicitud"}
                 </p>
               </div>
             )}
 
             {/* Nombre */}
             <div class="text-left">
-              <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                for="name"
+                class="mb-2 block text-sm font-medium text-gray-700"
+              >
                 Nombre
               </label>
               <input
@@ -69,7 +86,10 @@ export const DemoSection = component$<DemoSectionProps>(({ demoAction }) => {
 
             {/* Email */}
             <div class="text-left">
-              <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                for="email"
+                class="mb-2 block text-sm font-medium text-gray-700"
+              >
                 Email
               </label>
               <input
@@ -85,7 +105,10 @@ export const DemoSection = component$<DemoSectionProps>(({ demoAction }) => {
 
             {/* Teléfono */}
             <div class="text-left">
-              <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                for="phone"
+                class="mb-2 block text-sm font-medium text-gray-700"
+              >
                 Número de Teléfono
               </label>
               <input
@@ -101,7 +124,10 @@ export const DemoSection = component$<DemoSectionProps>(({ demoAction }) => {
 
             {/* Tipo de Producto */}
             <div class="text-left">
-              <label for="productType" class="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                for="productType"
+                class="mb-2 block text-sm font-medium text-gray-700"
+              >
                 Tipo de Producto
               </label>
               <select
@@ -123,9 +149,9 @@ export const DemoSection = component$<DemoSectionProps>(({ demoAction }) => {
             <button
               type="submit"
               disabled={isLoading.value || demoAction.value?.success}
-              class="w-full rounded-lg bg-blue-600 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-blue-700 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              class="w-full rounded-lg bg-blue-600 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-blue-700 hover:shadow-xl focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {isLoading.value ? 'Procesando...' : 'Recibir mi Llamada Demo'}
+              {isLoading.value ? "Procesando..." : "Recibir mi Llamada Demo"}
             </button>
           </Form>
         </div>

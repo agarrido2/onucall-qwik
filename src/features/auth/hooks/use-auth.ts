@@ -1,13 +1,13 @@
-import { useContext } from "@builder.io/qwik"
-import { AuthContext } from "~/lib/contexts/auth-context"
+import { useContext } from "@builder.io/qwik";
+import { AuthContext } from "~/lib/contexts/auth-context";
 
 /**
  * Hook para acceder al contexto de autenticación
- * 
+ *
  * @example
  * export default component$(() => {
  *   const auth = useAuth()
- *   
+ *
  *   return (
  *     <div>
  *       {auth.isAuthenticated ? (
@@ -18,9 +18,9 @@ import { AuthContext } from "~/lib/contexts/auth-context"
  *     </div>
  *   )
  * })
- * 
+ *
  * [CITE: GUIDE_AUTH_SUPA_QWIK.md - useAuth Hook]
  */
 export const useAuth = () => {
-  return useContext(AuthContext)
-}
+  return useContext(AuthContext);
+};

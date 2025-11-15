@@ -1,4 +1,3 @@
-
 import { component$, useSignal, useOnWindow, $ } from "@builder.io/qwik";
 import { Navigation } from "./section";
 
@@ -24,7 +23,7 @@ export const Header = component$(() => {
     <header
       class={{
         // Posicionamiento base responsive con altura dinámica
-        "fixed right-0 left-0 z-50 transition-all duration-300 ease-in-out header-height": true,
+        "header-height fixed right-0 left-0 z-50 transition-all duration-300 ease-in-out": true,
         // Estados condicionales - Solo posición, sin background
         "top-0": !isScrolled.value,
         "top-4": isScrolled.value,
@@ -33,7 +32,7 @@ export const Header = component$(() => {
       <div class="container-responsive">
         <div
           class={{
-            "relative mt-1 flex items-center justify-between border-2 rounded-full transition-all duration-300": true,
+            "relative mt-1 flex items-center justify-between rounded-full border-2 transition-all duration-300": true,
             // Altura responsive adaptada por breakpoint
             "h-14 px-4 sm:h-14 sm:px-5 lg:h-22 lg:px-6": true,
             // Glassmorphism solo cuando hay scroll
@@ -49,7 +48,10 @@ export const Header = component$(() => {
               alt="onucall logo"
             />
             <p class="ml-2 text-lg font-semibold sm:text-xl lg:text-2xl">
-              <strong class="text-primary text-2xl font-light sm:text-2xl lg:text-3xl">O</strong>nucall
+              <strong class="text-primary text-2xl font-light sm:text-2xl lg:text-3xl">
+                O
+              </strong>
+              nucall
             </p>
           </div>
 

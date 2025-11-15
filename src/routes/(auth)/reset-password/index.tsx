@@ -1,47 +1,47 @@
-import { component$, useSignal } from '@builder.io/qwik'
-import { routeAction$, Form, zod$ } from '@builder.io/qwik-city'
-import { createServerSupabaseClient } from '~/lib/supabase'
-import { resetPasswordSchema } from '~/features/auth/schemas/auth-schemas'
+import { component$, useSignal } from "@builder.io/qwik";
+import { routeAction$, Form, zod$ } from "@builder.io/qwik-city";
+import { createServerSupabaseClient } from "~/lib/supabase";
+import { resetPasswordSchema } from "~/features/auth/schemas/auth-schemas";
 
 /**
  * Reset Password Action
- * 
+ *
  * [CITE: CAPITULO-9.md] - routeAction$ para mutaciones
  * [CITE: QUALITY_STANDARDS.md] - Seguridad: Validación server-side
  */
 export const useResetPasswordAction = routeAction$(
   async (values, requestEvent) => {
-    const supabase = createServerSupabaseClient(requestEvent)
+    const supabase = createServerSupabaseClient(requestEvent);
 
     const { error } = await supabase.auth.updateUser({
       password: values.password,
-    })
+    });
 
     if (error) {
       return {
         success: false,
         error: error.message,
-      }
+      };
     }
 
     // Redirigir a dashboard después de cambiar contraseña
-    throw requestEvent.redirect(302, '/dashboard')
+    throw requestEvent.redirect(302, "/dashboard");
   },
-  zod$(resetPasswordSchema)
-)
+  zod$(resetPasswordSchema),
+);
 
 /**
  * Reset Password Page
- * 
+ *
  * Esta página es accedida mediante el enlace del email de recuperación.
  * Supabase maneja la sesión temporal automáticamente.
- * 
+ *
  * [CITE: UX_GUIDE.md] - Estados de loading/error obligatorios
  * [CITE: QUALITY_STANDARDS.md] - Accesible: Labels, ARIA, semántica
  */
 export default component$(() => {
-  const resetPasswordAction = useResetPasswordAction()
-  const isLoading = useSignal(false)
+  const resetPasswordAction = useResetPasswordAction();
+  const isLoading = useSignal(false);
 
   return (
     <div class="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
@@ -76,7 +76,7 @@ export default component$(() => {
             <div>
               <label
                 for="password"
-                class="block text-sm font-medium leading-6 text-gray-900"
+                class="block text-sm leading-6 font-medium text-gray-900"
               >
                 Nueva Contraseña
               </label>
@@ -86,7 +86,7 @@ export default component$(() => {
                 type="password"
                 autoComplete="new-password"
                 required
-                class="mt-2 block w-full rounded-md border-0 px-3 py-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                class="mt-2 block w-full rounded-md border-0 px-3 py-2 text-gray-900 ring-1 ring-gray-300 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-600 focus:ring-inset sm:text-sm sm:leading-6"
                 placeholder="Mínimo 6 caracteres"
                 disabled={isLoading.value}
               />
@@ -96,7 +96,7 @@ export default component$(() => {
             <div>
               <label
                 for="confirmPassword"
-                class="block text-sm font-medium leading-6 text-gray-900"
+                class="block text-sm leading-6 font-medium text-gray-900"
               >
                 Confirmar Nueva Contraseña
               </label>
@@ -106,7 +106,7 @@ export default component$(() => {
                 type="password"
                 autoComplete="new-password"
                 required
-                class="mt-2 block w-full rounded-md border-0 px-3 py-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                class="mt-2 block w-full rounded-md border-0 px-3 py-2 text-gray-900 ring-1 ring-gray-300 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-600 focus:ring-inset sm:text-sm sm:leading-6"
                 placeholder="Confirma tu nueva contraseña"
                 disabled={isLoading.value}
               />
@@ -118,7 +118,7 @@ export default component$(() => {
             <button
               type="submit"
               disabled={isLoading.value}
-              class="group relative flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
+              class="group relative flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:opacity-50"
               aria-label="Restablecer contraseña"
             >
               {isLoading.value ? (
@@ -157,5 +157,5 @@ export default component$(() => {
         </Form>
       </div>
     </div>
-  )
-})
+  );
+});

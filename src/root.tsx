@@ -11,7 +11,7 @@ export default component$(() => {
    * immediately followed by the document's <head> and <body>.
    *
    * Don't remove the `<head>` and `<body>` elements.
-   * 
+   *
    * [CITE: TAILWIND_QWIK_GUIDE.md] - Sistema de temas con prevención de flash
    */
 

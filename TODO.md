@@ -7,6 +7,7 @@ Registro de tareas pendientes organizadas por área funcional.
 ## 🎨 Landing Page
 
 ### SEO y Metadatos
+
 - [ ] **Crear imagen Open Graph (OG)**
   - Diseñar y crear `public/og-image.png` (1200x630px)
   - Incluir: logo, tagline "El mejor empleado digital 24/7", branding OnuCall
@@ -26,6 +27,7 @@ Registro de tareas pendientes organizadas por área funcional.
   - [CITE: SEO_A11Y_GUIDE.md - Regla 3.6]
 
 ### Contenido y Diseño
+
 - [ ] **Reemplazar placeholder del Hero**
   - Sustituir el placeholder actual por imagen real del dashboard
   - Usar patrón `import DashboardImg from '~/assets/images/dashboard.png?jsx'`
@@ -37,14 +39,16 @@ Registro de tareas pendientes organizadas por área funcional.
 ## 🔐 Autenticación
 
 ### OAuth Google
+
 - [ ] **Configuración Google Cloud Console**
   - Completar setup de credenciales OAuth 2.0
   - Configurar Authorized redirect URIs
   - Obtener Client ID y Client Secret para producción
   - Actualizar variables de entorno en `.env`
-  - [CITE: OAUTH_SETUP.md - Sección Google OAuth]
+  - [CITE: AUTH/OAUTH_SETUP.md - Sección Google OAuth]
 
 ### OAuth GitHub (Implementación Futura)
+
 - [ ] **Añadir GitHub OAuth Provider (cuando producto esté muy avanzado)**
   - Actualizar validación en `src/routes/api/auth/oauth/index.ts` para aceptar `'github'`
   - Añadir botón de GitHub en `src/features/auth/components/OAuthButtons.tsx`
@@ -53,22 +57,24 @@ Registro de tareas pendientes organizadas por área funcional.
   - Configurar en Supabase Dashboard
   - Testing del flujo completo OAuth
   - Actualizar estado en `OAUTH_SETUP.md` tabla de implementación
-  - [CITE: OAUTH_SETUP.md - Sección GitHub OAuth]
-  - [CITE: GUIDE_AUTH_SUPA_QWIK.md - Roadmap de OAuth Providers]
+  - [CITE: AUTH/OAUTH_SETUP.md - Sección GitHub OAuth]
+  - [CITE: AUTH/PROVIDERS/SUPABASE.md - Roadmap de OAuth Providers]
 
 ### Flujos de Usuario
+
 - [ ] **Verificación de Email (#4)**
   - Implementar sistema de verificación de correo electrónico
   - Email de bienvenida con enlace de confirmación
   - Página de confirmación exitosa/fallida
   - Resend de email si expira el token
-  - [CITE: GUIDE_AUTH_SUPA_QWIK.md]
+  - [CITE: AUTH/PROVIDERS/SUPABASE.md]
 
 ---
 
 ## 👤 Gestión de Usuario
 
 ### Perfil
+
 - [ ] **Página de Perfil (#3)**
   - Crear ruta `/profile` o `/dashboard/profile`
   - Formulario de edición de datos: nombre, email, avatar
@@ -81,6 +87,7 @@ Registro de tareas pendientes organizadas por área funcional.
 ## 🔒 Seguridad y Permisos
 
 ### RBAC (Role-Based Access Control)
+
 - [ ] **Sistema de Roles (#5)**
   - Definir roles: `admin`, `user`, `viewer` (o según necesidades)
   - Tabla `user_roles` en base de datos (Drizzle schema)
@@ -93,6 +100,7 @@ Registro de tareas pendientes organizadas por área funcional.
 ## 🧪 Testing
 
 ### Tests End-to-End
+
 - [ ] **Tests E2E con Playwright (#6)**
   - Setup de Playwright en el proyecto
   - Tests para flujo de registro/login
@@ -106,6 +114,7 @@ Registro de tareas pendientes organizadas por área funcional.
 ## 📚 Documentación
 
 ### Actualización de Docs
+
 - [ ] **Documentar cambios recientes (#7)**
   - Actualizar README.md con setup actual
   - Documentar estructura de carpetas final
@@ -118,6 +127,7 @@ Registro de tareas pendientes organizadas por área funcional.
 ## ⚡ Optimizaciones y Performance
 
 ### Fuentes
+
 - [ ] **Auto-alojar fuentes (opcional)**
   - Si usas Google Fonts, migrar a fuentes locales
   - Crear carpeta `public/fonts/`
@@ -125,6 +135,7 @@ Registro de tareas pendientes organizadas por área funcional.
   - [CITE: SEO_A11Y_GUIDE.md - Regla 4.2]
 
 ### Analytics
+
 - [ ] **Implementar Analytics con Partytown (post-launch)**
   - Integrar Google Analytics 4
   - Usar Partytown para mover script a Web Worker
@@ -136,6 +147,7 @@ Registro de tareas pendientes organizadas por área funcional.
 ## 🚀 Deployment
 
 ### Pre-Launch Checklist
+
 - [ ] **Verificar configuración de producción**
   - Variables de entorno en servidor
   - URLs de OAuth actualizadas
@@ -155,10 +167,12 @@ Registro de tareas pendientes organizadas por área funcional.
 ## 📝 Notas
 
 ### Convenciones
+
 - Las referencias `[CITE: archivo.md]` apuntan a la documentación canónica en `context/THINK_QWIK/`
 - Los números `(#N)` corresponden a IDs de issues/tasks previas del proyecto
 - Prioridad implícita: tareas sin checkbox vacío `[ ]` = pendiente, con `[x]` = completada
 
 ### Última actualización
+
 **Fecha**: 9 de noviembre de 2025  
 **Autor**: Qwik City Guru (AI Agent)
